@@ -1,0 +1,41 @@
+# Lig Tahtası — verileri Vikipedi'den her 30 dakikada bir günceller.
+# Değişiklik varsa data.json'ı kaydeder (commit); GitHub Pages siteyi kendiliğinden yeniden yayınlar.
+name: Verileri güncelle
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"   # her saat :07 ve :37'de (UTC). GitHub yoğunken birkaç dakika gecikebilir.
+  workflow_dispatch:          # Actions sekmesinden elle "Run workflow" ile de çalıştırılabilir
+
+permissions:
+  contents: write
+
+concurrency:
+  group: veri-guncelle
+  cancel-in-progress: false
+
+jobs:
+  guncelle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Vikipedi'den verileri al
+        run: node scripts/guncelle.mjs
+
+      - name: Değişiklik varsa kaydet
+        run: |
+          if git diff --quiet -- data.json; then
+            echo "data.json değişmedi."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "Verileri güncelle"
+          git push
