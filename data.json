@@ -1,76 +1,3050 @@
 {
-  "updated": "2026-11-26T20:45:00+03:00",
-  "season": "2026–27",
-  "weekDone": 12,
-  "_doc": {
-    "table": "[takımId, O, G, B, M, A, Y, P] — sıralı, 1. sıra ilk",
-    "results": "[hafta, tarih etiketi, evId, depId, ev golü, dep golü]",
-    "fixtures": "[gün etiketi, ISO başlama +03:00, evId, depId] — sıradaki haftanın oynanmamış maçları",
-    "scorers": "[oyuncu, takımId, maç, gol]",
-    "zones": "sıra → bölge anahtarı: ucl, uq, uel, uecl, rel",
-    "featured": "fixtures içinde öne çıkan maçın indeksi; null ise sayfa en üst sıradaki iki takımın maçını seçer"
+ "updated": "2026-11-26T22:29:46+03:00",
+ "season": "2026–27",
+ "weekDone": 12,
+ "_doc": {
+  "table": "[takımId, O, G, B, M, A, Y, P] — sıralı, 1. sıra ilk",
+  "results": "[hafta, tarih etiketi, evId, depId, ev golü, dep golü]",
+  "fixtures": "[gün etiketi, ISO başlama +03:00, evId, depId] — sıradaki haftanın oynanmamış maçları",
+  "scorers": "[oyuncu, takımId, maç, gol]",
+  "zones": "sıra → bölge anahtarı: ucl, uq, uel, uecl, rel",
+  "featured": "fixtures içinde öne çıkan maçın indeksi; null ise sayfa en üst sıradaki iki takımın maçını seçer"
+ },
+ "teams": {
+  "gs": {
+   "n": "Galatasaray",
+   "s": "GS",
+   "city": "İstanbul / Sarıyer",
+   "st": "Ali Sami Yen Spor Kompleksi",
+   "cap": 53798,
+   "co": "Okan Buruk"
   },
-  "teams": {
-    "gs":   {"n":"Galatasaray","s":"GS","city":"İstanbul / Sarıyer","st":"Ali Sami Yen Spor Kompleksi","cap":53798,"co":"Okan Buruk"},
-    "ts":   {"n":"Trabzonspor","s":"TS","city":"Trabzon / Ortahisar","st":"Şenol Güneş Spor Kompleksi","cap":41461,"co":"Thomas Reis"},
-    "bjk":  {"n":"Beşiktaş","s":"BJK","city":"İstanbul / Beşiktaş","st":"Beşiktaş Park","cap":42593,"co":"Vincenzo Italiano"},
-    "amed": {"n":"Amed","s":"AMD","city":"Diyarbakır / Kayapınar","st":"Diyarbakır Stadyumu","cap":30480,"co":"Besnik Hasi"},
-    "kas":  {"n":"Kasımpaşa","s":"KSP","city":"İstanbul / Beyoğlu","st":"Recep Tayyip Erdoğan Stadyumu","cap":14234,"co":"Alfred Schreuder"},
-    "fb":   {"n":"Fenerbahçe","s":"FB","city":"İstanbul / Kadıköy","st":"Şükrü Saracoğlu Stadyumu","cap":47430,"co":"Emre Belözoğlu"},
-    "ibfk": {"n":"İstanbul Başakşehir","s":"İBFK","city":"İstanbul / Başakşehir","st":"Başakşehir Fatih Terim Stadyumu","cap":17319,"co":"Nuri Şahin"},
-    "koc":  {"n":"Kocaelispor","s":"KOC","city":"Kocaeli / İzmit","st":"Kocaeli Stadyumu","cap":34829,"co":"Selçuk İnan"},
-    "goz":  {"n":"Göztepe","s":"GÖZ","city":"İzmir / Konak","st":"Gürsel Aksel Stadyumu","cap":25035,"co":"Stanimir Stoilov"},
-    "riz":  {"n":"Çaykur Rizespor","s":"RİZ","city":"Rize","st":"Çaykur Didi Stadyumu","cap":15332,"co":"Recep Uçar"},
-    "cor":  {"n":"Çorum FK","s":"ÇOR","city":"Çorum","st":"Çorum Şehir Stadyumu","cap":15000,"co":"Burak Yılmaz"},
-    "gen":  {"n":"Gençlerbirliği","s":"GEN","city":"Ankara / Yenimahalle","st":"Eryaman Stadyumu","cap":20672,"co":"Bernd Storck"},
-    "erz":  {"n":"Erzurumspor FK","s":"ERZ","city":"Erzurum / Yakutiye","st":"Kâzım Karabekir Stadyumu","cap":21374,"co":"Serkan Özbalta"},
-    "ala":  {"n":"Alanyaspor","s":"ALA","city":"Antalya / Alanya","st":"Alanya Oba Stadyumu","cap":9789,"co":"Uğur Uçar"},
-    "kon":  {"n":"Konyaspor","s":"KON","city":"Konya / Selçuklu","st":"Konya Büyükşehir Belediye Stadyumu","cap":42000,"co":"İlhan Palut"},
-    "gaz":  {"n":"Gaziantep FK","s":"GFK","city":"Gaziantep / Şehitkamil","st":"Gaziantep Stadyumu","cap":33502,"co":"Volkan Demirel"},
-    "sam":  {"n":"Samsunspor","s":"SAM","city":"Samsun / Canik","st":"Samsun 19 Mayıs Stadyumu","cap":33919,"co":"Nenad Bjelica"},
-    "eyup": {"n":"Eyüpspor","s":"EYP","city":"İstanbul / Eyüpsultan","st":"Necmi Kadıoğlu Stadyumu","cap":4274,"co":"Mustafa Dalcı"}
+  "ts": {
+   "n": "Trabzonspor",
+   "s": "TS",
+   "city": "Trabzon / Ortahisar",
+   "st": "Şenol Güneş Spor Kompleksi",
+   "cap": 41461,
+   "co": "Thomas Reis"
   },
-  "zones": {"1":"ucl","2":"uq","3":"uel","4":"uecl","17":"rel","18":"rel"},
-  "table": [
-    ["gs",12,10,1,1,29,16,31],["ts",12,9,1,2,27,8,28],["bjk",12,8,1,3,27,14,25],["amed",12,7,2,3,28,17,23],
-    ["kas",12,6,5,1,19,12,23],["fb",12,6,2,4,31,12,20],["ibfk",12,6,2,4,23,19,20],["koc",12,6,2,4,15,11,20],
-    ["goz",12,5,3,4,23,19,18],["riz",12,5,2,5,15,16,17],["cor",12,5,1,6,23,25,16],["gen",12,4,2,6,13,21,14],
-    ["erz",12,4,2,6,10,18,14],["ala",12,3,3,6,10,20,12],["kon",12,2,2,8,8,18,8],["gaz",12,2,2,8,9,20,8],
-    ["sam",12,2,1,9,12,28,7],["eyup",12,1,0,11,3,31,3]
+  "bjk": {
+   "n": "Beşiktaş",
+   "s": "BJK",
+   "city": "İstanbul / Beşiktaş",
+   "st": "Beşiktaş Park",
+   "cap": 42593,
+   "co": "Vincenzo Italiano"
+  },
+  "amed": {
+   "n": "Amed",
+   "s": "AMD",
+   "city": "Diyarbakır / Kayapınar",
+   "st": "Diyarbakır Stadyumu",
+   "cap": 30480,
+   "co": "Besnik Hasi"
+  },
+  "kas": {
+   "n": "Kasımpaşa",
+   "s": "KSP",
+   "city": "İstanbul / Beyoğlu",
+   "st": "Recep Tayyip Erdoğan Stadyumu",
+   "cap": 14234,
+   "co": "Alfred Schreuder"
+  },
+  "fb": {
+   "n": "Fenerbahçe",
+   "s": "FB",
+   "city": "İstanbul / Kadıköy",
+   "st": "Şükrü Saracoğlu Stadyumu",
+   "cap": 47430,
+   "co": "Emre Belözoğlu"
+  },
+  "ibfk": {
+   "n": "İstanbul Başakşehir",
+   "s": "İBFK",
+   "city": "İstanbul / Başakşehir",
+   "st": "Başakşehir Fatih Terim Stadyumu",
+   "cap": 17319,
+   "co": "Nuri Şahin"
+  },
+  "koc": {
+   "n": "Kocaelispor",
+   "s": "KOC",
+   "city": "Kocaeli / İzmit",
+   "st": "Kocaeli Stadyumu",
+   "cap": 34829,
+   "co": "Selçuk İnan"
+  },
+  "goz": {
+   "n": "Göztepe",
+   "s": "GÖZ",
+   "city": "İzmir / Konak",
+   "st": "Gürsel Aksel Stadyumu",
+   "cap": 25035,
+   "co": "Stanimir Stoilov"
+  },
+  "riz": {
+   "n": "Çaykur Rizespor",
+   "s": "RİZ",
+   "city": "Rize",
+   "st": "Çaykur Didi Stadyumu",
+   "cap": 15332,
+   "co": "Recep Uçar"
+  },
+  "cor": {
+   "n": "Çorum FK",
+   "s": "ÇOR",
+   "city": "Çorum",
+   "st": "Çorum Şehir Stadyumu",
+   "cap": 15000,
+   "co": "Burak Yılmaz"
+  },
+  "gen": {
+   "n": "Gençlerbirliği",
+   "s": "GEN",
+   "city": "Ankara / Yenimahalle",
+   "st": "Eryaman Stadyumu",
+   "cap": 20672,
+   "co": "Bernd Storck"
+  },
+  "erz": {
+   "n": "Erzurumspor FK",
+   "s": "ERZ",
+   "city": "Erzurum / Yakutiye",
+   "st": "Kâzım Karabekir Stadyumu",
+   "cap": 21374,
+   "co": "Serkan Özbalta"
+  },
+  "ala": {
+   "n": "Alanyaspor",
+   "s": "ALA",
+   "city": "Antalya / Alanya",
+   "st": "Alanya Oba Stadyumu",
+   "cap": 9789,
+   "co": "Uğur Uçar"
+  },
+  "kon": {
+   "n": "Konyaspor",
+   "s": "KON",
+   "city": "Konya / Selçuklu",
+   "st": "Konya Büyükşehir Belediye Stadyumu",
+   "cap": 42000,
+   "co": "İlhan Palut"
+  },
+  "gaz": {
+   "n": "Gaziantep FK",
+   "s": "GFK",
+   "city": "Gaziantep / Şehitkamil",
+   "st": "Gaziantep Stadyumu",
+   "cap": 33502,
+   "co": "Volkan Demirel"
+  },
+  "sam": {
+   "n": "Samsunspor",
+   "s": "SAM",
+   "city": "Samsun / Canik",
+   "st": "Samsun 19 Mayıs Stadyumu",
+   "cap": 33919,
+   "co": "Nenad Bjelica"
+  },
+  "eyup": {
+   "n": "Eyüpspor",
+   "s": "EYP",
+   "city": "İstanbul / Eyüpsultan",
+   "st": "Necmi Kadıoğlu Stadyumu",
+   "cap": 4274,
+   "co": "Mustafa Dalcı"
+  }
+ },
+ "zones": {
+  "1": "ucl",
+  "2": "uq",
+  "3": "uel",
+  "4": "uecl",
+  "17": "rel",
+  "18": "rel"
+ },
+ "table": [
+  [
+   "gs",
+   12,
+   10,
+   1,
+   1,
+   29,
+   16,
+   31
   ],
-  "results": [
-    [7,"9 Eki","gs","kas",3,1],[7,"10 Eki","riz","fb",0,3],[7,"10 Eki","sam","ts",0,3],[7,"10 Eki","gen","amed",2,2],[7,"10 Eki","ala","erz",0,0],[7,"11 Eki","kon","ibfk",0,0],[7,"11 Eki","gaz","cor",0,3],[7,"11 Eki","bjk","koc",2,1],[7,"12 Eki","eyup","goz",0,4],
-    [8,"16 Eki","cor","riz",2,1],[8,"17 Eki","fb","ala",3,0],[8,"17 Eki","erz","eyup",2,0],[8,"17 Eki","gen","gs",0,1],[8,"18 Eki","koc","goz",1,2],[8,"18 Eki","ibfk","gaz",2,1],[8,"18 Eki","kas","sam",4,1],[8,"19 Eki","ts","bjk",2,0],
-    [9,"23 Eki","ala","koc",1,2],[9,"24 Eki","sam","amed",1,2],[9,"24 Eki","eyup","kas",0,1],[9,"24 Eki","gaz","erz",1,3],[9,"25 Eki","kon","gen",2,0],[9,"25 Eki","goz","cor",2,0],[9,"26 Eki","gs","fb",2,1],[9,"26 Eki","riz","ts",3,4],[9,"26 Eki","bjk","ibfk",2,0],
-    [10,"30 Eki","kon","gs",0,4],[10,"31 Eki","erz","cor",1,3],[10,"31 Eki","koc","riz",0,0],[10,"31 Eki","fb","goz",1,2],[10,"1 Kas","ts","gaz",2,0],[10,"1 Kas","ibfk","sam",5,2],[10,"1 Kas","kas","bjk",2,2],[10,"1 Kas","amed","eyup",5,1],[10,"2 Kas","gen","ala",5,0],
-    [11,"6 Kas","gaz","kas",0,2],[11,"7 Kas","sam","kon",1,0],[11,"7 Kas","gs","amed",4,3],[11,"7 Kas","goz","ibfk",1,2],[11,"7 Kas","eyup","koc",0,2],[11,"8 Kas","bjk","gen",3,0],[11,"8 Kas","cor","fb",0,5],[11,"8 Kas","ala","ts",0,2],[11,"8 Kas","riz","erz",2,1],
-    [12,"21–23 Kas","gen","gaz",1,0],[12,"21–23 Kas","gs","sam",2,1],[12,"21–23 Kas","amed","riz",0,2],[12,"21–23 Kas","koc","fb",2,2],[12,"21–23 Kas","erz","goz",0,1],[12,"21–23 Kas","kas","ala",2,1],[12,"22 Kas","kon","bjk",2,4],[12,"21–23 Kas","ts","eyup",1,0],[12,"21–23 Kas","ibfk","cor",4,2]
+  [
+   "ts",
+   12,
+   9,
+   1,
+   2,
+   27,
+   8,
+   28
   ],
-  "fixturesWeek": 13,
-  "fixtures": [
-    ["27 Kasım Cuma","2026-11-27T20:00:00+03:00","ala","kon"],["27 Kasım Cuma","2026-11-27T20:00:00+03:00","riz","kas"],
-    ["28 Kasım Cumartesi","2026-11-28T16:00:00+03:00","sam","gen"],["28 Kasım Cumartesi","2026-11-28T19:00:00+03:00","gaz","amed"],
-    ["29 Kasım Pazar","2026-11-29T13:30:00+03:00","cor","koc"],["29 Kasım Pazar","2026-11-29T16:00:00+03:00","eyup","ibfk"],["29 Kasım Pazar","2026-11-29T19:00:00+03:00","fb","erz"],
-    ["30 Kasım Pazartesi","2026-11-30T19:00:00+03:00","goz","ts"],["30 Kasım Pazartesi","2026-11-30T21:00:00+03:00","bjk","gs"]
+  [
+   "bjk",
+   12,
+   8,
+   1,
+   3,
+   27,
+   14,
+   25
   ],
-  "featured": 8,
-  "featuredLabel": "Haftanın derbisi",
-  "scorers": [
-    ["Dušan Vlahović","bjk",10,11],["Gift Orban","amed",12,10],["Victor Osimhen","gs",8,9],["Adrian Benedyczak","kas",12,9],
-    ["Eldar Şahmuradov","ibfk",12,9],["Muhammed Salah","ts",12,9],["Mason Greenwood","fb",11,7],["Jesús Ramírez","cor",12,7]
+  [
+   "amed",
+   12,
+   7,
+   2,
+   3,
+   28,
+   17,
+   23
   ],
-  "facts": [
-    ["En farklı skor","Fenerbahçe 8–0 Eyüpspor (20 Eyl)"],
-    ["En gollü maç","Beşiktaş 6–2 Çorum FK (31 Ağu)"],
-    ["En uzun galibiyet serisi","Trabzonspor · 7 maç"],
-    ["En uzun yenilmezlik serisi","Amed · 8 maç"],
-    ["En uzun mağlubiyet serisi","Eyüpspor · 9 maç"]
+  [
+   "kas",
+   12,
+   6,
+   5,
+   1,
+   19,
+   12,
+   23
   ],
-  "notes": {},
-  "notesEn": {},
-  "sources": [
-    ["Vikipedi (kaynak: TFF)","https://tr.wikipedia.org/wiki/2026-27_S%C3%BCper_Lig"],
-    ["Yeni Şafak","https://www.yenisafak.com/spor/super-lig-12-hafta-tamamlandi-iste-guncel-puan-durumu-ve-mac-sonuclari-4875828"],
-    ["Hürriyet","https://www.hurriyet.com.tr/sporarena/galeri-super-ligde-bu-hafta-hangi-maclar-oynanacak-besiktas-galatasaray-derbisi-ne-zaman-saat-kacta-43392006"]
+  [
+   "fb",
+   12,
+   6,
+   2,
+   4,
+   31,
+   12,
+   20
+  ],
+  [
+   "ibfk",
+   12,
+   6,
+   2,
+   4,
+   23,
+   19,
+   20
+  ],
+  [
+   "koc",
+   12,
+   6,
+   2,
+   4,
+   15,
+   11,
+   20
+  ],
+  [
+   "goz",
+   12,
+   5,
+   3,
+   4,
+   23,
+   19,
+   18
+  ],
+  [
+   "riz",
+   12,
+   5,
+   2,
+   5,
+   15,
+   16,
+   17
+  ],
+  [
+   "cor",
+   12,
+   5,
+   1,
+   6,
+   23,
+   25,
+   16
+  ],
+  [
+   "gen",
+   12,
+   4,
+   2,
+   6,
+   13,
+   21,
+   14
+  ],
+  [
+   "erz",
+   12,
+   4,
+   2,
+   6,
+   10,
+   18,
+   14
+  ],
+  [
+   "ala",
+   12,
+   3,
+   3,
+   6,
+   10,
+   20,
+   12
+  ],
+  [
+   "kon",
+   12,
+   2,
+   2,
+   8,
+   8,
+   18,
+   8
+  ],
+  [
+   "gaz",
+   12,
+   2,
+   2,
+   8,
+   9,
+   20,
+   8
+  ],
+  [
+   "sam",
+   12,
+   2,
+   1,
+   9,
+   12,
+   28,
+   7
+  ],
+  [
+   "eyup",
+   12,
+   1,
+   0,
+   11,
+   3,
+   31,
+   3
   ]
+ ],
+ "results": [
+  [
+   1,
+   "14 Ağu",
+   "gs",
+   "cor",
+   2,
+   2,
+   [
+    [
+     "h",
+     "Victor Osimhen",
+     "53'"
+    ],
+    [
+     "h",
+     "Victor Osimhen",
+     "90'"
+    ],
+    [
+     "a",
+     "Aleksandros Kiziridis",
+     "59'"
+    ],
+    [
+     "a",
+     "Jesús Ramírez",
+     "61'"
+    ]
+   ]
+  ],
+  [
+   1,
+   "15 Ağu",
+   "kas",
+   "ts",
+   1,
+   1,
+   [
+    [
+     "h",
+     "Adrian Benedyczak",
+     "55' (P)"
+    ],
+    [
+     "a",
+     "Noah Saviolo",
+     "43'"
+    ]
+   ]
+  ],
+  [
+   1,
+   "15 Ağu",
+   "kon",
+   "riz",
+   0,
+   1,
+   [
+    [
+     "a",
+     "Qazim Laçi",
+     "90' (P)"
+    ]
+   ]
+  ],
+  [
+   1,
+   "15 Ağu",
+   "gen",
+   "fb",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Franco Tongya",
+     "37'"
+    ],
+    [
+     "h",
+     "Oğulcan Ülgün",
+     "56'"
+    ],
+    [
+     "a",
+     "Talisca",
+     "13'"
+    ]
+   ]
+  ],
+  [
+   1,
+   "15 Ağu",
+   "gaz",
+   "ala",
+   1,
+   1,
+   [
+    [
+     "h",
+     "Deian Sorescu",
+     "61'"
+    ],
+    [
+     "a",
+     "Ruan",
+     "20'"
+    ]
+   ]
+  ],
+  [
+   1,
+   "16 Ağu",
+   "ibfk",
+   "koc",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Christopher Opéri",
+     "14'"
+    ],
+    [
+     "h",
+     "Eldar Şahmuradov",
+     "72'"
+    ]
+   ]
+  ],
+  [
+   1,
+   "16 Ağu",
+   "bjk",
+   "eyup",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Václav Černý",
+     "25'"
+    ]
+   ]
+  ],
+  [
+   1,
+   "16 Ağu",
+   "amed",
+   "erz",
+   3,
+   0,
+   [
+    [
+     "h",
+     "Dia Saba",
+     "53'"
+    ],
+    [
+     "h",
+     "Dia Saba",
+     "62'"
+    ],
+    [
+     "h",
+     "Gökhan Gül",
+     "70'"
+    ]
+   ]
+  ],
+  [
+   1,
+   "17 Ağu",
+   "sam",
+   "goz",
+   3,
+   3,
+   [
+    [
+     "h",
+     "Marius Mouandilmadji",
+     "30' (P)"
+    ],
+    [
+     "h",
+     "Emre Kılınç",
+     "43'"
+    ],
+    [
+     "h",
+     "Celil Yüksel",
+     "90'"
+    ],
+    [
+     "a",
+     "Alex Matos",
+     "3'"
+    ],
+    [
+     "a",
+     "Sinclair Armstrong",
+     "46'"
+    ],
+    [
+     "a",
+     "Efkan Bekiroğlu",
+     "65'"
+    ]
+   ]
+  ],
+  [
+   2,
+   "21 Ağu",
+   "erz",
+   "gs",
+   0,
+   4,
+   [
+    [
+     "a",
+     "Roland Sallai",
+     "12'"
+    ],
+    [
+     "a",
+     "Yunus Akgün",
+     "20'"
+    ],
+    [
+     "a",
+     "Victor Osimhen",
+     "45'"
+    ],
+    [
+     "a",
+     "Victor Osimhen",
+     "80'"
+    ]
+   ]
+  ],
+  [
+   2,
+   "22 Ağu",
+   "cor",
+   "kas",
+   0,
+   1,
+   [
+    [
+     "a",
+     "Adrian Benedyczak",
+     "6'"
+    ]
+   ]
+  ],
+  [
+   2,
+   "22 Ağu",
+   "riz",
+   "sam",
+   0,
+   2,
+   [
+    [
+     "a",
+     "Joe Mendes",
+     "34'"
+    ],
+    [
+     "a",
+     "Fatih Kaya",
+     "63'"
+    ]
+   ]
+  ],
+  [
+   2,
+   "22 Ağu",
+   "fb",
+   "kon",
+   4,
+   2,
+   [
+    [
+     "h",
+     "Vedat Muriqi",
+     "7'"
+    ],
+    [
+     "h",
+     "Mason Greenwood",
+     "20'"
+    ],
+    [
+     "h",
+     "Mason Greenwood",
+     "49'"
+    ],
+    [
+     "h",
+     "Marco Asensio",
+     "33'"
+    ],
+    [
+     "a",
+     "Ebrima Colley",
+     "10'"
+    ],
+    [
+     "a",
+     "Deniz Türüç",
+     "90'"
+    ]
+   ]
+  ],
+  [
+   2,
+   "23 Ağu",
+   "eyup",
+   "gaz",
+   0,
+   1,
+   [
+    [
+     "a",
+     "Deian Sorescu",
+     "60'"
+    ]
+   ]
+  ],
+  [
+   2,
+   "23 Ağu",
+   "ts",
+   "ibfk",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Muhammed Salah",
+     "8'"
+    ],
+    [
+     "h",
+     "Muhammed Salah",
+     "48'"
+    ],
+    [
+     "a",
+     "Eldar Şahmuradov",
+     "19' (P)"
+    ]
+   ]
+  ],
+  [
+   2,
+   "23 Ağu",
+   "goz",
+   "gen",
+   0,
+   1,
+   [
+    [
+     "a",
+     "Sékou Koïta",
+     "51'"
+    ]
+   ]
+  ],
+  [
+   2,
+   "23 Ağu",
+   "ala",
+   "bjk",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Nuno Lima",
+     "73'"
+    ]
+   ]
+  ],
+  [
+   2,
+   "24 Ağu",
+   "koc",
+   "amed",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Berkan Kutlu",
+     "16'"
+    ],
+    [
+     "h",
+     "Matej Maglica",
+     "87'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "28 Ağu",
+   "gen",
+   "erz",
+   1,
+   1,
+   [
+    [
+     "h",
+     "Adama Traoré",
+     "66'"
+    ],
+    [
+     "a",
+     "Eren Tozlu",
+     "55'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "29 Ağu",
+   "kon",
+   "koc",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Tanguy Zoukrou",
+     "39' (KK)"
+    ],
+    [
+     "a",
+     "Massadio Haïdara",
+     "72'"
+    ],
+    [
+     "a",
+     "Metehan Altunbaş",
+     "86'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "29 Ağu",
+   "gaz",
+   "riz",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Zakaria Ariss",
+     "90' (KK)"
+    ],
+    [
+     "a",
+     "Emrecan Bulut",
+     "12'"
+    ],
+    [
+     "a",
+     "Ali Sowe",
+     "35'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "29 Ağu",
+   "gs",
+   "goz",
+   3,
+   2,
+   [
+    [
+     "h",
+     "Davinson Sánchez",
+     "33'"
+    ],
+    [
+     "h",
+     "Gabriel Sara",
+     "55'"
+    ],
+    [
+     "h",
+     "Victor Osimhen",
+     "63' (P)"
+    ],
+    [
+     "a",
+     "Novatus Miroshi",
+     "17'"
+    ],
+    [
+     "a",
+     "Juan",
+     "66'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "30 Ağu",
+   "eyup",
+   "ala",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Ahmed Abdullahi",
+     "39'"
+    ],
+    [
+     "h",
+     "Zak Jules",
+     "90'"
+    ],
+    [
+     "a",
+     "Arda Usluoğlu",
+     "1'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "30 Ağu",
+   "sam",
+   "fb",
+   0,
+   2,
+   [
+    [
+     "a",
+     "Vedat Muriqi",
+     "3'"
+    ],
+    [
+     "a",
+     "Oğuz Aydın",
+     "49'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "30 Ağu",
+   "ibfk",
+   "kas",
+   1,
+   1,
+   [
+    [
+     "h",
+     "Eldar Şahmuradov",
+     "18'"
+    ],
+    [
+     "a",
+     "Fousseni Diabaté",
+     "81'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "31 Ağu",
+   "amed",
+   "ts",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Yira Sor",
+     "45'"
+    ],
+    [
+     "h",
+     "Gift Orban",
+     "90'"
+    ],
+    [
+     "a",
+     "Muhammed Salah",
+     "11'"
+    ]
+   ]
+  ],
+  [
+   3,
+   "31 Ağu",
+   "bjk",
+   "cor",
+   6,
+   2,
+   [
+    [
+     "h",
+     "Václav Černý",
+     "9'"
+    ],
+    [
+     "h",
+     "Dušan Vlahović",
+     "43' (P)"
+    ],
+    [
+     "h",
+     "Dušan Vlahović",
+     "59'"
+    ],
+    [
+     "h",
+     "Dušan Vlahović",
+     "66'"
+    ],
+    [
+     "h",
+     "İlhan Fakılı",
+     "73'"
+    ],
+    [
+     "h",
+     "Michael Murillo",
+     "83'"
+    ],
+    [
+     "a",
+     "Mohamed Diomande",
+     "52'"
+    ],
+    [
+     "a",
+     "Ermin Mahmić",
+     "77'"
+    ]
+   ]
+  ],
+  [
+   4,
+   "4 Eyl",
+   "ibfk",
+   "gs",
+   2,
+   3,
+   [
+    [
+     "h",
+     "Eldar Şahmuradov",
+     "66' (P)"
+    ],
+    [
+     "h",
+     "Davinson Sánchez",
+     "76' (KK)"
+    ],
+    [
+     "a",
+     "Victor Osimhen",
+     "17'"
+    ],
+    [
+     "a",
+     "Lucas Torreira",
+     "71'"
+    ],
+    [
+     "a",
+     "Gabriel Sara",
+     "90+1'"
+    ]
+   ]
+  ],
+  [
+   4,
+   "5 Eyl",
+   "erz",
+   "kon",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Eren Tozlu",
+     "17'"
+    ]
+   ]
+  ],
+  [
+   4,
+   "5 Eyl",
+   "fb",
+   "bjk",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Milan Škriniar",
+     "26'"
+    ],
+    [
+     "a",
+     "Rıdvan Yılmaz",
+     "38'"
+    ],
+    [
+     "a",
+     "Dušan Vlahović",
+     "73'"
+    ]
+   ]
+  ],
+  [
+   4,
+   "6 Eyl",
+   "kas",
+   "amed",
+   2,
+   2,
+   [
+    [
+     "h",
+     "Güven Yalçın",
+     "20'"
+    ],
+    [
+     "h",
+     "Adrian Benedyczak",
+     "52'"
+    ],
+    [
+     "a",
+     "Gift Orban",
+     "59'"
+    ],
+    [
+     "a",
+     "Gift Orban",
+     "83'"
+    ]
+   ]
+  ],
+  [
+   4,
+   "6 Eyl",
+   "cor",
+   "eyup",
+   3,
+   0,
+   [
+    [
+     "h",
+     "Aleksandros Kiziridis",
+     "6'"
+    ],
+    [
+     "h",
+     "Andrei Borza",
+     "27'"
+    ],
+    [
+     "h",
+     "Ermin Mahmić",
+     "88'"
+    ]
+   ]
+  ],
+  [
+   4,
+   "6 Eyl",
+   "ts",
+   "gen",
+   5,
+   0,
+   [
+    [
+     "h",
+     "Paul Onuachu",
+     "5'"
+    ],
+    [
+     "h",
+     "Paul Onuachu",
+     "22'"
+    ],
+    [
+     "h",
+     "Muhammed Salah",
+     "14' (P)"
+    ],
+    [
+     "h",
+     "Ernest Muçi",
+     "59'"
+    ],
+    [
+     "h",
+     "Franculino",
+     "78'"
+    ]
+   ]
+  ],
+  [
+   4,
+   "6 Eyl",
+   "koc",
+   "sam",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Florian Ayé",
+     "26'"
+    ]
+   ]
+  ],
+  [
+   4,
+   "7 Eyl",
+   "riz",
+   "ala",
+   0,
+   1,
+   [
+    [
+     "a",
+     "Zakaria Ariss",
+     "70' (KK)"
+    ]
+   ]
+  ],
+  [
+   4,
+   "7 Eyl",
+   "goz",
+   "gaz",
+   2,
+   4,
+   [
+    [
+     "h",
+     "Juan",
+     "51'"
+    ],
+    [
+     "h",
+     "Juan",
+     "90' (P)"
+    ],
+    [
+     "a",
+     "Halil Dervişoğlu",
+     "5'"
+    ],
+    [
+     "a",
+     "Myenty Abena",
+     "10'"
+    ],
+    [
+     "a",
+     "Kacper Kozłowski",
+     "34'"
+    ],
+    [
+     "a",
+     "Kacper Kozłowski",
+     "45'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "11 Eyl",
+   "bjk",
+   "erz",
+   3,
+   0,
+   [
+    [
+     "h",
+     "Emirhan Topçu",
+     "21'"
+    ],
+    [
+     "h",
+     "Leandro Trossard",
+     "27'"
+    ],
+    [
+     "h",
+     "İlhan Fakılı",
+     "81'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "12 Eyl",
+   "sam",
+   "cor",
+   1,
+   5,
+   [
+    [
+     "h",
+     "Logi Tómasson",
+     "5'"
+    ],
+    [
+     "a",
+     "Jesús Ramírez",
+     "1'"
+    ],
+    [
+     "a",
+     "Jesús Ramírez",
+     "71'"
+    ],
+    [
+     "a",
+     "Cengiz Ünder",
+     "10'"
+    ],
+    [
+     "a",
+     "Cengiz Ünder",
+     "15'"
+    ],
+    [
+     "a",
+     "Aleksandros Kiziridis",
+     "69'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "12 Eyl",
+   "eyup",
+   "riz",
+   0,
+   2,
+   [
+    [
+     "a",
+     "Ali Sowe",
+     "21'"
+    ],
+    [
+     "a",
+     "Emrecan Bulut",
+     "90'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "12 Eyl",
+   "kon",
+   "ts",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Rajmund Tóth",
+     "2'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "12 Eyl",
+   "ala",
+   "goz",
+   2,
+   2,
+   [
+    [
+     "h",
+     "Paolo Fernandes",
+     "63'"
+    ],
+    [
+     "h",
+     "Gaïus Makouta",
+     "75'"
+    ],
+    [
+     "a",
+     "Juan",
+     "73' (P)"
+    ],
+    [
+     "a",
+     "Rhaldney",
+     "28'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "13 Eyl",
+   "gen",
+   "kas",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Ousmane Diabate",
+     "23'"
+    ],
+    [
+     "a",
+     "Adrian Benedyczak",
+     "79'"
+    ],
+    [
+     "a",
+     "Güven Yalçın",
+     "90'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "13 Eyl",
+   "amed",
+   "ibfk",
+   5,
+   0,
+   [
+    [
+     "h",
+     "Emin Bayram",
+     "45' (KK)"
+    ],
+    [
+     "h",
+     "Gift Orban",
+     "52'"
+    ],
+    [
+     "h",
+     "Gift Orban",
+     "56'"
+    ],
+    [
+     "h",
+     "Gift Orban",
+     "75'"
+    ],
+    [
+     "h",
+     "Mbaye Diagne",
+     "84'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "13 Eyl",
+   "gs",
+   "koc",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Abdülkerim Bardakcı",
+     "71'"
+    ]
+   ]
+  ],
+  [
+   5,
+   "14 Eyl",
+   "gaz",
+   "fb",
+   0,
+   0
+  ],
+  [
+   6,
+   "18 Eyl",
+   "kas",
+   "kon",
+   0,
+   0
+  ],
+  [
+   6,
+   "19 Eyl",
+   "cor",
+   "ala",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Jesús Ramírez",
+     "76'"
+    ],
+    [
+     "a",
+     "Gaïus Makouta",
+     "67'"
+    ],
+    [
+     "a",
+     "Arda Usluoğlu",
+     "78'"
+    ]
+   ]
+  ],
+  [
+   6,
+   "19 Eyl",
+   "koc",
+   "gaz",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Berkan Kutlu",
+     "56'"
+    ],
+    [
+     "h",
+     "Dan Agyei",
+     "76'"
+    ]
+   ]
+  ],
+  [
+   6,
+   "19 Eyl",
+   "ibfk",
+   "gen",
+   4,
+   0,
+   [
+    [
+     "h",
+     "Andreas Skov Olsen",
+     "9'"
+    ],
+    [
+     "h",
+     "Eldar Şahmuradov",
+     "33'"
+    ],
+    [
+     "h",
+     "Eldar Şahmuradov",
+     "65'"
+    ],
+    [
+     "h",
+     "Davie Selke",
+     "53' (P)"
+    ]
+   ]
+  ],
+  [
+   6,
+   "19 Eyl",
+   "ts",
+   "gs",
+   4,
+   0,
+   [
+    [
+     "h",
+     "Muhammed Salah",
+     "4'"
+    ],
+    [
+     "h",
+     "Muhammed Salah",
+     "44'"
+    ],
+    [
+     "h",
+     "Muhammed Salah",
+     "80'"
+    ],
+    [
+     "h",
+     "Noah Saviolo",
+     "39'"
+    ]
+   ]
+  ],
+  [
+   6,
+   "20 Eyl",
+   "erz",
+   "sam",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Miguel Cardoso",
+     "45'"
+    ]
+   ]
+  ],
+  [
+   6,
+   "20 Eyl",
+   "fb",
+   "eyup",
+   8,
+   0,
+   [
+    [
+     "h",
+     "Mason Greenwood",
+     "4' (P)"
+    ],
+    [
+     "h",
+     "Mason Greenwood",
+     "80'"
+    ],
+    [
+     "h",
+     "Vedat Muriqi",
+     "7'"
+    ],
+    [
+     "h",
+     "Vedat Muriqi",
+     "21'"
+    ],
+    [
+     "h",
+     "Vedat Muriqi",
+     "47'"
+    ],
+    [
+     "h",
+     "Vedat Muriqi",
+     "55'"
+    ],
+    [
+     "h",
+     "Mattéo Guendouzi",
+     "38'"
+    ],
+    [
+     "h",
+     "İrfan Can Kahveci",
+     "45'"
+    ]
+   ]
+  ],
+  [
+   6,
+   "20 Eyl",
+   "goz",
+   "riz",
+   2,
+   2,
+   [
+    [
+     "h",
+     "Arda Okan Kurtulan",
+     "2'"
+    ],
+    [
+     "h",
+     "Efkan Bekiroğlu",
+     "90' (P)"
+    ],
+    [
+     "a",
+     "Ibrahim Olawoyin",
+     "70'"
+    ],
+    [
+     "a",
+     "Iustin Doicaru",
+     "80'"
+    ]
+   ]
+  ],
+  [
+   6,
+   "20 Eyl",
+   "amed",
+   "bjk",
+   3,
+   2,
+   [
+    [
+     "h",
+     "Gift Orban",
+     "13'"
+    ],
+    [
+     "h",
+     "Dia Saba",
+     "22'"
+    ],
+    [
+     "h",
+     "Furkan Soyalp",
+     "59'"
+    ],
+    [
+     "a",
+     "Dušan Vlahović",
+     "55'"
+    ],
+    [
+     "a",
+     "Orkun Kökçü",
+     "90' (P)"
+    ]
+   ]
+  ],
+  [
+   7,
+   "9 Eki",
+   "gs",
+   "kas",
+   3,
+   1,
+   [
+    [
+     "h",
+     "Abdülkerim Bardakcı",
+     "45'"
+    ],
+    [
+     "h",
+     "Barış Alper Yılmaz",
+     "90'"
+    ],
+    [
+     "h",
+     "Mario Lemina",
+     "90+5'"
+    ],
+    [
+     "a",
+     "Jesurun Rak-Sakyi",
+     "68'"
+    ]
+   ]
+  ],
+  [
+   7,
+   "10 Eki",
+   "gen",
+   "amed",
+   2,
+   2,
+   [
+    [
+     "h",
+     "Thalisson",
+     "90'"
+    ],
+    [
+     "h",
+     "Rafael Luís",
+     "54'"
+    ],
+    [
+     "a",
+     "Dia Saba",
+     "25' (P)"
+    ],
+    [
+     "a",
+     "Samuel Ballet",
+     "67'"
+    ]
+   ]
+  ],
+  [
+   7,
+   "10 Eki",
+   "sam",
+   "ts",
+   0,
+   3,
+   [
+    [
+     "a",
+     "Ernest Muçi",
+     "27'"
+    ],
+    [
+     "a",
+     "Chibuike Nwaiwu",
+     "38'"
+    ],
+    [
+     "a",
+     "Franculino",
+     "40'"
+    ]
+   ]
+  ],
+  [
+   7,
+   "10 Eki",
+   "ala",
+   "erz",
+   0,
+   0
+  ],
+  [
+   7,
+   "10 Eki",
+   "riz",
+   "fb",
+   0,
+   3,
+   [
+    [
+     "a",
+     "Marco Asensio",
+     "12'"
+    ],
+    [
+     "a",
+     "İrfan Can Kahveci",
+     "83'"
+    ],
+    [
+     "a",
+     "Oğuz Aydın",
+     "87'"
+    ]
+   ]
+  ],
+  [
+   7,
+   "11 Eki",
+   "kon",
+   "ibfk",
+   0,
+   0
+  ],
+  [
+   7,
+   "11 Eki",
+   "gaz",
+   "cor",
+   0,
+   3,
+   [
+    [
+     "a",
+     "Cengiz Ünder",
+     "37'"
+    ],
+    [
+     "a",
+     "Aleksandros Kiziridis",
+     "60'"
+    ],
+    [
+     "a",
+     "Markus Karlsbakk",
+     "82'"
+    ]
+   ]
+  ],
+  [
+   7,
+   "11 Eki",
+   "bjk",
+   "koc",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Orkun Kökçü",
+     "18'"
+    ],
+    [
+     "h",
+     "Dušan Vlahović",
+     "31' (P)"
+    ],
+    [
+     "a",
+     "Show",
+     "27'"
+    ]
+   ]
+  ],
+  [
+   7,
+   "12 Eki",
+   "eyup",
+   "goz",
+   0,
+   4,
+   [
+    [
+     "a",
+     "Juan",
+     "11' (P)"
+    ],
+    [
+     "a",
+     "André Henrique",
+     "54'"
+    ],
+    [
+     "a",
+     "André Henrique",
+     "59'"
+    ],
+    [
+     "a",
+     "André Henrique",
+     "75' (P)"
+    ]
+   ]
+  ],
+  [
+   8,
+   "16 Eki",
+   "cor",
+   "riz",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Cengiz Ünder",
+     "38'"
+    ],
+    [
+     "h",
+     "Youssoufa Moukoko",
+     "80'"
+    ],
+    [
+     "a",
+     "Qazim Laçi",
+     "32'"
+    ]
+   ]
+  ],
+  [
+   8,
+   "17 Eki",
+   "erz",
+   "eyup",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Miguel Cardoso",
+     "19'"
+    ],
+    [
+     "h",
+     "Eren Tozlu",
+     "47'"
+    ]
+   ]
+  ],
+  [
+   8,
+   "17 Eki",
+   "gen",
+   "gs",
+   0,
+   1,
+   [
+    [
+     "a",
+     "Deniz Gül",
+     "88'"
+    ]
+   ]
+  ],
+  [
+   8,
+   "17 Eki",
+   "amed",
+   "kon",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Mbaye Diagne",
+     "86'"
+    ]
+   ]
+  ],
+  [
+   8,
+   "17 Eki",
+   "fb",
+   "ala",
+   3,
+   0,
+   [
+    [
+     "h",
+     "Romelu Lukaku",
+     "40'"
+    ],
+    [
+     "h",
+     "Kerem Aktürkoğlu",
+     "71'"
+    ],
+    [
+     "h",
+     "Vedat Muriqi",
+     "87'"
+    ]
+   ]
+  ],
+  [
+   8,
+   "18 Eki",
+   "kas",
+   "sam",
+   4,
+   1,
+   [
+    [
+     "h",
+     "Cláudio Winck",
+     "26'"
+    ],
+    [
+     "h",
+     "Adem Arus",
+     "31'"
+    ],
+    [
+     "h",
+     "Adem Arus",
+     "64'"
+    ],
+    [
+     "h",
+     "Adrian Benedyczak",
+     "78'"
+    ],
+    [
+     "a",
+     "Tanguy Coulibaly",
+     "45'"
+    ]
+   ]
+  ],
+  [
+   8,
+   "18 Eki",
+   "koc",
+   "goz",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Berkan Kutlu",
+     "82' (P)"
+    ],
+    [
+     "a",
+     "Show",
+     "24' (KK)"
+    ],
+    [
+     "a",
+     "Novatus Miroshi",
+     "77'"
+    ]
+   ]
+  ],
+  [
+   8,
+   "18 Eki",
+   "ibfk",
+   "gaz",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Eldar Şahmuradov",
+     "8'"
+    ],
+    [
+     "h",
+     "Umut Güneş",
+     "81'"
+    ],
+    [
+     "a",
+     "Serdar Dursun",
+     "66'"
+    ]
+   ]
+  ],
+  [
+   8,
+   "19 Eki",
+   "ts",
+   "bjk",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Ozan Tufan",
+     "21'"
+    ],
+    [
+     "h",
+     "Muhammed Salah",
+     "71'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "23 Eki",
+   "ala",
+   "koc",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Ruan",
+     "52'"
+    ],
+    [
+     "a",
+     "Berkan Kutlu",
+     "27'"
+    ],
+    [
+     "a",
+     "Makana Baku",
+     "42'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "24 Eki",
+   "eyup",
+   "kas",
+   0,
+   1,
+   [
+    [
+     "a",
+     "Adrian Benedyczak",
+     "37'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "24 Eki",
+   "gaz",
+   "erz",
+   1,
+   3,
+   [
+    [
+     "h",
+     "Kerim Çalhanoğlu",
+     "70'"
+    ],
+    [
+     "a",
+     "Miguel Cardoso",
+     "52'"
+    ],
+    [
+     "a",
+     "Amar Gërxhaliu",
+     "64'"
+    ],
+    [
+     "a",
+     "Guram Giorbelidze",
+     "90'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "24 Eki",
+   "sam",
+   "amed",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Logi Tómasson",
+     "21'"
+    ],
+    [
+     "a",
+     "Dia Saba",
+     "83'"
+    ],
+    [
+     "a",
+     "Gift Orban",
+     "73'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "25 Eki",
+   "kon",
+   "gen",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Chidozie Awaziem",
+     "43'"
+    ],
+    [
+     "h",
+     "Chidozie Awaziem",
+     "56'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "25 Eki",
+   "goz",
+   "cor",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Alexis Antunes",
+     "3'"
+    ],
+    [
+     "h",
+     "Juan",
+     "38'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "26 Eki",
+   "riz",
+   "ts",
+   3,
+   4,
+   [
+    [
+     "h",
+     "Gennaro Borrelli",
+     "12'"
+    ],
+    [
+     "h",
+     "Gennaro Borrelli",
+     "32'"
+    ],
+    [
+     "h",
+     "Qazim Laçi",
+     "68'"
+    ],
+    [
+     "a",
+     "Melih Kabasakal",
+     "49'"
+    ],
+    [
+     "a",
+     "Aral Şimşir",
+     "51'"
+    ],
+    [
+     "a",
+     "Franculino",
+     "57'"
+    ],
+    [
+     "a",
+     "Franculino",
+     "83'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "26 Eki",
+   "bjk",
+   "ibfk",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Oh Hyeon-gyu",
+     "76'"
+    ],
+    [
+     "h",
+     "Junior Olaitan",
+     "89'"
+    ]
+   ]
+  ],
+  [
+   9,
+   "26 Eki",
+   "gs",
+   "fb",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Victor Osimhen",
+     "29'"
+    ],
+    [
+     "h",
+     "Victor Osimhen",
+     "44'"
+    ],
+    [
+     "a",
+     "İrfan Can Kahveci",
+     "62'"
+    ]
+   ]
+  ],
+  [
+   10,
+   "30 Eki",
+   "kon",
+   "gs",
+   0,
+   4,
+   [
+    [
+     "a",
+     "Victor Osimhen",
+     "12'"
+    ],
+    [
+     "a",
+     "Yunus Akgün",
+     "28'"
+    ],
+    [
+     "a",
+     "Aleksey Batrakov",
+     "49'"
+    ],
+    [
+     "a",
+     "Rafael Leão",
+     "55' (P)"
+    ]
+   ]
+  ],
+  [
+   10,
+   "31 Eki",
+   "erz",
+   "cor",
+   1,
+   3,
+   [
+    [
+     "h",
+     "Ibrahim Diabate",
+     "74'"
+    ],
+    [
+     "a",
+     "Çağlar Söyüncü",
+     "20'"
+    ],
+    [
+     "a",
+     "Jesús Ramírez",
+     "71'"
+    ],
+    [
+     "a",
+     "Jesús Ramírez",
+     "79'"
+    ]
+   ]
+  ],
+  [
+   10,
+   "31 Eki",
+   "koc",
+   "riz",
+   0,
+   0
+  ],
+  [
+   10,
+   "31 Eki",
+   "fb",
+   "goz",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Mattéo Guendouzi",
+     "45'"
+    ],
+    [
+     "a",
+     "Sinclair Armstrong",
+     "76'"
+    ],
+    [
+     "a",
+     "André Henrique",
+     "78'"
+    ]
+   ]
+  ],
+  [
+   10,
+   "1 Kas",
+   "amed",
+   "eyup",
+   5,
+   1,
+   [
+    [
+     "h",
+     "Ermal Krasniqi",
+     "13'"
+    ],
+    [
+     "h",
+     "Gift Orban",
+     "35'"
+    ],
+    [
+     "h",
+     "Samuel Ballet",
+     "42'"
+    ],
+    [
+     "h",
+     "Samuel Ballet",
+     "51'"
+    ],
+    [
+     "h",
+     "Samuel Ballet",
+     "83' (P)"
+    ],
+    [
+     "a",
+     "Ahmed Abdullahi",
+     "73'"
+    ]
+   ]
+  ],
+  [
+   10,
+   "1 Kas",
+   "ts",
+   "gaz",
+   2,
+   0,
+   [
+    [
+     "h",
+     "Stefan Savić",
+     "45'"
+    ],
+    [
+     "h",
+     "Ernest Muçi",
+     "61'"
+    ]
+   ]
+  ],
+  [
+   10,
+   "1 Kas",
+   "ibfk",
+   "sam",
+   5,
+   2,
+   [
+    [
+     "h",
+     "Eldar Şahmuradov",
+     "10'"
+    ],
+    [
+     "h",
+     "Andreas Skov Olsen",
+     "25'"
+    ],
+    [
+     "h",
+     "Emin Bayram",
+     "41'"
+    ],
+    [
+     "h",
+     "Ousseynou Ba",
+     "75'"
+    ],
+    [
+     "h",
+     "Abbasbek Feyzullayev",
+     "90'"
+    ],
+    [
+     "a",
+     "Tanguy Coulibaly",
+     "22'"
+    ],
+    [
+     "a",
+     "Elayis Tavsan",
+     "84'"
+    ]
+   ]
+  ],
+  [
+   10,
+   "1 Kas",
+   "kas",
+   "bjk",
+   2,
+   2,
+   [
+    [
+     "h",
+     "Cláudio Winck",
+     "60'"
+    ],
+    [
+     "h",
+     "Marcus Rafferty",
+     "87'"
+    ],
+    [
+     "a",
+     "Leandro Trossard",
+     "28'"
+    ],
+    [
+     "a",
+     "Dušan Vlahović",
+     "47'"
+    ]
+   ]
+  ],
+  [
+   10,
+   "2 Kas",
+   "gen",
+   "ala",
+   5,
+   0,
+   [
+    [
+     "h",
+     "Oğulcan Ülgün",
+     "1'"
+    ],
+    [
+     "h",
+     "Pedro Mendes",
+     "68'"
+    ],
+    [
+     "h",
+     "Franco Tongya",
+     "59'"
+    ],
+    [
+     "h",
+     "Tiago Gouveia",
+     "66'"
+    ],
+    [
+     "h",
+     "Tiago Gouveia",
+     "78'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "6 Kas",
+   "gaz",
+   "kas",
+   0,
+   2,
+   [
+    [
+     "a",
+     "Haris Hajradinović",
+     "3'"
+    ],
+    [
+     "a",
+     "Adrian Benedyczak",
+     "21'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "7 Kas",
+   "eyup",
+   "koc",
+   0,
+   2,
+   [
+    [
+     "a",
+     "Dan Agyei",
+     "5'"
+    ],
+    [
+     "a",
+     "Berkan Kutlu",
+     "28'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "7 Kas",
+   "sam",
+   "kon",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Antoine Sekongo",
+     "39'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "7 Kas",
+   "gs",
+   "amed",
+   4,
+   3,
+   [
+    [
+     "h",
+     "Rafael Leão",
+     "7'"
+    ],
+    [
+     "h",
+     "Alban Lafont",
+     "45' (KK)"
+    ],
+    [
+     "h",
+     "Aleksey Batrakov",
+     "59'"
+    ],
+    [
+     "h",
+     "Barış Alper Yılmaz",
+     "80'"
+    ],
+    [
+     "a",
+     "Gift Orban",
+     "65'"
+    ],
+    [
+     "a",
+     "Dia Saba",
+     "62'"
+    ],
+    [
+     "a",
+     "Yira Sor",
+     "90+2'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "7 Kas",
+   "goz",
+   "ibfk",
+   1,
+   2,
+   [
+    [
+     "h",
+     "Juan",
+     "18'"
+    ],
+    [
+     "a",
+     "Davie Selke",
+     "22'"
+    ],
+    [
+     "a",
+     "Edin Višća",
+     "83'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "8 Kas",
+   "riz",
+   "erz",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Ali Sowe",
+     "31'"
+    ],
+    [
+     "h",
+     "Ali Sowe",
+     "66'"
+    ],
+    [
+     "a",
+     "Ibrahim Diabate",
+     "37'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "8 Kas",
+   "cor",
+   "fb",
+   0,
+   5,
+   [
+    [
+     "a",
+     "Mason Greenwood",
+     "12'"
+    ],
+    [
+     "a",
+     "Mason Greenwood",
+     "63'"
+    ],
+    [
+     "a",
+     "İrfan Can Kahveci",
+     "21'"
+    ],
+    [
+     "a",
+     "İrfan Can Kahveci",
+     "56'"
+    ],
+    [
+     "a",
+     "Oğuz Aydın",
+     "74'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "8 Kas",
+   "ala",
+   "ts",
+   0,
+   2,
+   [
+    [
+     "a",
+     "Wagner Pina",
+     "17'"
+    ],
+    [
+     "a",
+     "Muhammed Salah",
+     "34'"
+    ]
+   ]
+  ],
+  [
+   11,
+   "8 Kas",
+   "bjk",
+   "gen",
+   3,
+   0,
+   [
+    [
+     "h",
+     "Dušan Vlahović",
+     "20'"
+    ],
+    [
+     "h",
+     "Dušan Vlahović",
+     "45'"
+    ],
+    [
+     "h",
+     "Ernest Poku",
+     "85'"
+    ]
+   ]
+  ],
+  [
+   12,
+   "22 Kas",
+   "ibfk",
+   "cor",
+   4,
+   2
+  ],
+  [
+   12,
+   "22 Kas",
+   "amed",
+   "riz",
+   0,
+   2
+  ],
+  [
+   12,
+   "22 Kas",
+   "erz",
+   "goz",
+   0,
+   1
+  ],
+  [
+   12,
+   "22 Kas",
+   "kas",
+   "ala",
+   2,
+   1
+  ],
+  [
+   12,
+   "22 Kas",
+   "gen",
+   "gaz",
+   1,
+   0
+  ],
+  [
+   12,
+   "22 Kas",
+   "gs",
+   "sam",
+   2,
+   1
+  ],
+  [
+   12,
+   "22 Kas",
+   "koc",
+   "fb",
+   2,
+   2
+  ],
+  [
+   12,
+   "22 Kas",
+   "kon",
+   "bjk",
+   2,
+   4
+  ],
+  [
+   12,
+   "22 Kas",
+   "ts",
+   "eyup",
+   1,
+   0
+  ]
+ ],
+ "fixturesWeek": 13,
+ "fixtures": [
+  [
+   "27 Kasım Cuma",
+   "2026-11-27T20:00:00+03:00",
+   "ala",
+   "kon"
+  ],
+  [
+   "27 Kasım Cuma",
+   "2026-11-27T20:00:00+03:00",
+   "riz",
+   "kas"
+  ],
+  [
+   "28 Kasım Cumartesi",
+   "2026-11-28T16:00:00+03:00",
+   "sam",
+   "gen"
+  ],
+  [
+   "28 Kasım Cumartesi",
+   "2026-11-28T19:00:00+03:00",
+   "gaz",
+   "amed"
+  ],
+  [
+   "29 Kasım Pazar",
+   "2026-11-29T13:30:00+03:00",
+   "cor",
+   "koc"
+  ],
+  [
+   "29 Kasım Pazar",
+   "2026-11-29T16:00:00+03:00",
+   "eyup",
+   "ibfk"
+  ],
+  [
+   "29 Kasım Pazar",
+   "2026-11-29T19:00:00+03:00",
+   "fb",
+   "erz"
+  ],
+  [
+   "30 Kasım Pazartesi",
+   "2026-11-30T19:00:00+03:00",
+   "goz",
+   "ts"
+  ],
+  [
+   "30 Kasım Pazartesi",
+   "2026-11-30T21:00:00+03:00",
+   "bjk",
+   "gs"
+  ]
+ ],
+ "featured": 8,
+ "featuredLabel": "Haftanın derbisi",
+ "scorers": [
+  [
+   "Dušan Vlahović",
+   "bjk",
+   10,
+   11
+  ],
+  [
+   "Gift Orban",
+   "amed",
+   12,
+   10
+  ],
+  [
+   "Victor Osimhen",
+   "gs",
+   8,
+   9
+  ],
+  [
+   "Adrian Benedyczak",
+   "kas",
+   12,
+   9
+  ],
+  [
+   "Eldar Şahmuradov",
+   "ibfk",
+   12,
+   9
+  ],
+  [
+   "Muhammed Salah",
+   "ts",
+   12,
+   9
+  ],
+  [
+   "Mason Greenwood",
+   "fb",
+   11,
+   7
+  ],
+  [
+   "Jesús Ramírez",
+   "cor",
+   12,
+   7
+  ],
+  [
+   "Juan",
+   "goz",
+   12,
+   7
+  ],
+  [
+   "Vedat Muriqi",
+   "fb",
+   12,
+   7
+  ]
+ ],
+ "facts": [
+  [
+   "En farklı skor",
+   "Fenerbahçe 8–0 Eyüpspor (20 Eyl)"
+  ],
+  [
+   "En gollü maç",
+   "Beşiktaş 6–2 Çorum FK (31 Ağu)"
+  ],
+  [
+   "En uzun galibiyet serisi",
+   "Trabzonspor · 7 maç"
+  ],
+  [
+   "En uzun yenilmezlik serisi",
+   "Amed · 8 maç"
+  ],
+  [
+   "En uzun mağlubiyet serisi",
+   "Eyüpspor · 9 maç"
+  ]
+ ],
+ "notes": {},
+ "notesEn": {},
+ "sources": [
+  [
+   "Vikipedi (CC BY-SA 4.0)",
+   "https://tr.wikipedia.org/wiki/2026-27_S%C3%BCper_Lig"
+  ],
+  [
+   "Vikipedi maç listesi",
+   "https://tr.wikipedia.org/wiki/2026-27_S%C3%BCper_Lig_ma%C3%A7lar%C4%B1"
+  ]
+ ],
+ "autoNotes": {},
+ "autoNotesEn": {}
 }
