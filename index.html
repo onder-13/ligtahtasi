@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>Lig Tahtası</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sticky scoreboard header with tabbed views (puan / fikstür / istatistik / takımlar); one centered 1120px column. Data comes from data.json, refreshed nightly. */
+:root{
+  --bg:#f3f5f1; --surface:#ffffff; --sunk:#e8ece5; --line:#d6ddd2;
+  --fg:#14201a; --muted:#5b6a61; --pitch:#0f3d2a; --pitch-fg:#eef5ef;
+  --accent:#d6223a; --accent-soft:#fbe3e6;
+  --win:#1f8a4c; --draw:#a1880f; --loss:#c63333; --none:#b8c1ba;
+  --z-ucl:#1d5fd1; --z-uq:#5b8fe6; --z-uel:#e08a12; --z-uecl:#1f9a73; --z-rel:#c63333;
+  --fav:#fff4cf;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1410; --surface:#121e18; --sunk:#0f1914; --line:#22342a;
+  --fg:#e6eee8; --muted:#90a397; --pitch:#0a2a1d; --pitch-fg:#e6f1e9;
+  --accent:#ff4d63; --accent-soft:#3a1519;
+  --win:#3cc46f; --draw:#d6b72e; --loss:#f05c5c; --none:#3a4a40;
+  --z-ucl:#5b93ff; --z-uq:#86adf5; --z-uel:#f2a33a; --z-uecl:#3cc49a; --z-rel:#f05c5c;
+  --fav:#2e2a12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1410; --surface:#121e18; --sunk:#0f1914; --line:#22342a;
+  --fg:#e6eee8; --muted:#90a397; --pitch:#0a2a1d; --pitch-fg:#e6f1e9;
+  --accent:#ff4d63; --accent-soft:#3a1519;
+  --win:#3cc46f; --draw:#d6b72e; --loss:#f05c5c; --none:#3a4a40;
+  --z-ucl:#5b93ff; --z-uq:#86adf5; --z-uel:#f2a33a; --z-uecl:#3cc49a; --z-rel:#f05c5c;
+  --fav:#2e2a12; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--pitch)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:.01em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--pitch);color:var(--pitch-fg);
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 60px,transparent 60px 120px)}
+.top{display:flex;align-items:center;gap:16px;padding-block:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;margin-right:auto;flex-wrap:wrap}
+.brand h1{font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.brand h1 b{color:var(--accent)}
+.brand span{font-size:12px;opacity:.7;letter-spacing:.08em;text-transform:uppercase}
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav a{color:inherit;text-decoration:none;font-family:var(--display);font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.05em;padding:6px 12px;border-radius:6px;opacity:.72;white-space:nowrap}
+nav a:hover{opacity:1;background:rgba(255,255,255,.08)}
+nav a[aria-current="page"]{opacity:1;background:rgba(255,255,255,.14);box-shadow:inset 0 -2px 0 var(--accent)}
+
+.ticker{border-top:1px solid rgba(255,255,255,.1);font-size:13px}
+.ticker .wrap{display:flex;gap:18px;align-items:center;padding-block:7px;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+.ticker .lbl{font-family:var(--display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-size:14px}
+.ticker .it{opacity:.88}
+.ticker .it b{font-weight:700}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:12px;opacity:.85}
+.live::before{content:"";width:7px;height:7px;border-radius:50%;background:#3cc46f;box-shadow:0 0 0 3px rgba(60,196,111,.25)}
+.live.stale::before{background:#e0a800;box-shadow:0 0 0 3px rgba(224,168,0,.25)}
+
+main{padding-block:24px 48px}
+section[data-view]{display:grid;gap:24px}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sec-head h2{font-size:34px;font-weight:800;text-transform:uppercase;line-height:1}
+.sec-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.eyebrow{font-family:var(--display);font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.status{padding:28px;text-align:center;color:var(--muted)}
+
+.derby{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding:20px 24px;background:var(--surface);border:1px solid var(--line);border-radius:10px;position:relative;overflow:hidden}
+.derby::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent calc(50% - .5px),var(--line) calc(50% - .5px),var(--line) calc(50% + .5px),transparent calc(50% + .5px));opacity:.6}
+.derby .side{display:flex;align-items:center;gap:14px;z-index:1;min-width:0}
+.derby .side.r{justify-content:flex-end;text-align:right}
+.derby .tn{font-family:var(--display);font-size:30px;font-weight:800;text-transform:uppercase;line-height:1}
+.derby .meta{font-size:12px;color:var(--muted)}
+.derby .mid{z-index:1;text-align:center;background:var(--surface);padding:4px 14px}
+.derby .mid .eyebrow{color:var(--accent)}
+.cd{display:flex;gap:6px;justify-content:center;margin-top:6px}
+.cd div{background:var(--pitch);color:var(--pitch-fg);border-radius:6px;padding:4px 8px;min-width:48px}
+.cd b{display:block;font-family:var(--display);font-size:26px;line-height:1}
+.cd small{font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.derby .when{font-size:13px;margin-top:6px;color:var(--muted)}
+
+/* crest: original shield badges in club colours */
+.crest{flex:none;width:26px;height:30px;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.18))}
+.crest.lg{width:46px;height:53px}
+.crest.xl{width:64px;height:74px}
+
+.tablebox{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{padding:8px 8px;text-align:center;white-space:nowrap}
+thead th{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+thead th button{background:none;border:0;padding:2px 4px;letter-spacing:inherit;text-transform:inherit;font:inherit;color:inherit}
+thead th button[aria-sort]{color:var(--fg)}
+thead th button[aria-sort="descending"]::after{content:" ▼";font-size:9px}
+thead th button[aria-sort="ascending"]::after{content:" ▲";font-size:9px}
+tbody tr{border-bottom:1px solid var(--line)}
+tbody tr:last-child{border-bottom:0}
+tbody tr:hover{background:var(--sunk)}
+tbody tr.fav{background:var(--fav)}
+td.pos{position:relative;font-weight:700;width:44px}
+td.pos::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:4px;border-radius:0 3px 3px 0;background:var(--zc,transparent)}
+td.team{text-align:left;width:100%}
+.tbtn{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;text-align:left;font-weight:600}
+.tbtn:hover .nm{text-decoration:underline;text-underline-offset:3px}
+td.pts{font-family:var(--display);font-size:20px;font-weight:800}
+td.gd.pos-v{color:var(--win)} td.gd.neg-v{color:var(--loss)}
+.form{display:flex;gap:3px;justify-content:center}
+.form i{width:20px;height:20px;border-radius:4px;display:grid;place-items:center;font-style:normal;font-size:10px;font-weight:700;color:#fff}
+.form .W{background:var(--win)} .form .D{background:var(--draw)} .form .L{background:var(--loss)} .form .N{background:var(--none)}
+.star{background:none;border:0;font-size:16px;line-height:1;padding:2px;color:var(--muted);opacity:.5}
+.star[aria-pressed="true"]{color:#e0a800;opacity:1}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;padding:12px 16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend span::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--zc)}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:3px}
+.seg button{border:0;background:none;padding:5px 12px;border-radius:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+@media (max-width:640px){
+  .hide-sm{display:none}
+  table{min-width:0}
+  .sec-head h2{font-size:28px}
+  .derby{grid-template-columns:1fr;text-align:center}
+  .derby .side,.derby .side.r{justify-content:center;text-align:center}
+  .derby .side.r{flex-direction:row-reverse}
+  .derby::after{display:none}
+  .derby .tn{font-size:24px}
+}
+
+.weeks{display:flex;gap:6px;flex-wrap:wrap}
+.weeks button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 12px;font-family:var(--display);font-weight:700;font-size:16px}
+.weeks button[aria-pressed="true"]{background:var(--pitch);color:var(--pitch-fg);border-color:var(--pitch)}
+.weeks button.next{border-color:var(--accent)}
+.matches{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
+.match{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.match .h,.match .a{display:flex;align-items:center;gap:8px;min-width:0;font-weight:600;font-size:14px}
+.match .a{justify-content:flex-end;text-align:right}
+.match .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.match .sc{font-family:var(--display);font-size:24px;font-weight:800;background:var(--sunk);border-radius:6px;padding:2px 10px;min-width:64px;text-align:center}
+.match .sc.up{font-size:15px;font-weight:700;line-height:1.2;padding:5px 8px;background:var(--pitch);color:var(--pitch-fg)}
+.match .sc.up small{display:block;font-family:var(--body);font-size:10px;font-weight:500;opacity:.8}
+.match.big{border-color:var(--accent);background:linear-gradient(var(--accent-soft),var(--surface) 70%)}
+.match .w{font-weight:800}
+.match .l{color:var(--muted);font-weight:500}
+.daylbl{grid-column:1/-1;margin-top:6px}
+.note{font-size:12px;color:var(--muted);margin:0}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px}
+.kpi b{display:block;font-family:var(--display);font-size:38px;font-weight:800;line-height:1}
+.kpi span{font-size:12px;color:var(--muted)}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid2>*{min-width:0}
+@media (max-width:820px){.grid2{grid-template-columns:1fr}}
+.panel h3{font-size:22px;text-transform:uppercase;font-weight:800}
+.panel .ph{padding:14px 16px 4px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.scorers{list-style:none;margin:0;padding:8px 16px 16px;display:grid;gap:10px}
+.scorers li{display:grid;grid-template-columns:22px 26px 1fr auto;gap:10px;align-items:center}
+.scorers .rk{font-family:var(--display);font-weight:800;color:var(--muted);font-size:18px}
+.scorers .who b{display:block;font-size:14px}
+.scorers .who small{color:var(--muted);font-size:12px}
+.scorers .bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;margin-top:4px}
+.scorers .bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.scorers .g{font-family:var(--display);font-size:26px;font-weight:800;line-height:1;text-align:right}
+.scorers .g small{display:block;font-family:var(--body);font-size:10px;color:var(--muted);font-weight:500}
+.chart{padding:4px 8px 12px}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-family:var(--body);font-size:11px}
+.chart .tl{fill:var(--fg);font-weight:600;font-size:10.5px}
+.facts{list-style:none;margin:0;padding:6px 16px 16px}
+.facts li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.facts li:last-child{border-bottom:0}
+.facts li span{color:var(--muted)}
+.facts li b{text-align:right}
+.hbars{padding:6px 16px 16px;display:grid;gap:6px}
+.hbars .r{display:grid;grid-template-columns:110px 1fr 34px;gap:8px;align-items:center;font-size:13px}
+.hbars .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbars .trk{height:14px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.hbars .trk i{display:block;height:100%;border-radius:3px}
+.hbars .v{text-align:right;font-weight:700}
+
+.teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.tcard{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;text-align:left;width:100%}
+.tcard:hover{border-color:var(--muted)}
+.tcard b{display:block;font-size:15px}
+.tcard small{color:var(--muted);font-size:12px;display:block}
+.tcard .ps{font-family:var(--display);font-size:28px;font-weight:800;color:var(--muted)}
+
+dialog{border:0;padding:0;border-radius:14px;background:var(--surface);color:var(--fg);width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 48px)}
+dialog::backdrop{background:rgba(5,15,10,.55)}
+.dh{display:flex;gap:14px;align-items:center;padding:20px;background:var(--pitch);color:var(--pitch-fg)}
+.dh h3{font-size:30px;text-transform:uppercase;font-weight:800;line-height:1}
+.dh p{margin:4px 0 0;font-size:13px;opacity:.8}
+.dh .x{margin-left:auto;background:rgba(255,255,255,.12);border:0;border-radius:8px;width:34px;height:34px;font-size:18px;color:inherit;align-self:flex-start}
+.db{padding:16px 20px 20px;display:grid;gap:16px}
+.mini{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mini div{background:var(--sunk);border-radius:8px;padding:8px 10px}
+.mini b{display:block;font-family:var(--display);font-size:24px;font-weight:800;line-height:1}
+.mini span{font-size:11px;color:var(--muted)}
+.rlist{display:grid;gap:6px}
+.rlist .rr{display:grid;grid-template-columns:44px 22px 1fr auto;gap:8px;align-items:center;font-size:13px}
+.rlist .wk{color:var(--muted);font-size:12px}
+.rlist .rs{font-family:var(--display);font-weight:800;font-size:17px}
+footer{border-top:1px solid var(--line);padding-block:20px;color:var(--muted);font-size:12px}
+footer a{color:inherit}
+/* live */
+.lv{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:#fff;font-family:var(--body);font-size:11px;font-weight:700;border-radius:4px;padding:1px 6px;letter-spacing:.02em;white-space:nowrap}
+.lv::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+.mv{font-size:10px;font-weight:700;margin-left:2px}
+.mv.up{color:var(--win)} .mv.dn{color:var(--loss)}
+.match.onair{border-color:var(--accent)}
+.match .sc.on{background:var(--accent);color:#fff}
+.match .gl{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px}
+.match .gl .ga{text-align:right;grid-column:2}
+.match .gl .gh{grid-column:1}
+.ticker .it.on b{color:#fff;background:var(--accent);border-radius:3px;padding:0 4px}
+.livescore{font-family:var(--display);font-size:44px;font-weight:800;line-height:1;margin-top:4px}
+@media (prefers-reduced-motion:no-preference){
+  .lv::before,.ldot{animation:blink 1.2s ease-in-out infinite}
+  @keyframes blink{50%{opacity:.25}}
+  section[data-view]{animation:fade .25s ease}
+  @keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+}
+</style>
+<style>
+.lang{display:inline-flex;border:1px solid rgba(255,255,255,.25);border-radius:7px;padding:2px;gap:2px}
+.lang button{border:0;background:none;color:inherit;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.06em;padding:3px 9px;border-radius:5px;opacity:.65}
+.lang button[aria-pressed="true"]{background:var(--accent);color:#fff;opacity:1}
+.lang button:hover{opacity:1}
+</style>
+
+<svg id="sprite" width="0" height="0" style="position:absolute" aria-hidden="true"></svg>
+
+<header>
+  <div class="wrap top">
+    <div class="brand"><h1>Lig<b>·</b>Tahtası</h1><span id="season">Süper Lig</span></div>
+    <nav data-i18n-aria="sections">
+      <a href="#puan" data-i18n="nav_puan">Puan Durumu</a>
+      <a href="#fikstur" data-i18n="nav_fikstur">Fikstür</a>
+      <a href="#istatistik" data-i18n="nav_istatistik">İstatistik</a>
+      <a href="#takimlar" data-i18n="nav_takimlar">Takımlar</a>
+    </nav>
+    <div class="lang" role="group" data-i18n-aria="lang_group">
+      <button type="button" id="lang-tr" data-lang="tr" aria-pressed="true" title="Türkçe">TR</button>
+      <button type="button" id="lang-en" data-lang="en" aria-pressed="false" title="English">EN</button>
+    </div>
+  </div>
+  <div class="ticker"><div class="wrap" id="ticker"><span class="live" data-i18n="loading">Veriler yükleniyor</span></div></div>
+</header>
+
+<main class="wrap">
+  <section data-view="puan" id="v-puan">
+    <div class="derby" id="derby"><div class="status" style="grid-column:1/-1" data-i18n="feat_loading">Öne çıkan maç yükleniyor</div></div>
+    <div class="sec-head">
+      <div><h2 data-i18n="standings">Puan Durumu</h2><p id="tbl-sub" data-i18n="tbl_loading">Tablo yükleniyor.</p></div>
+      <div class="tools">
+        <div class="seg" role="group" data-i18n-aria="view_group">
+          <button type="button" id="vw-all" aria-pressed="true" data-i18n="vw_all">Tümü</button>
+          <button type="button" id="vw-top" aria-pressed="false" data-i18n="vw_top">Zirve</button>
+          <button type="button" id="vw-bot" aria-pressed="false" data-i18n="vw_bot">Düşme hattı</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="tablebox">
+        <table id="standings">
+          <thead><tr>
+            <th><button type="button" data-k="pos">#</button></th>
+            <th style="text-align:left"><button type="button" data-k="name" data-i18n="th_team">Takım</button></th>
+            <th><button type="button" data-k="p" data-i18n="th_p">O</button></th>
+            <th><button type="button" data-k="w" data-i18n="th_w">G</button></th>
+            <th><button type="button" data-k="d" data-i18n="th_d">B</button></th>
+            <th><button type="button" data-k="l" data-i18n="th_l">M</button></th>
+            <th class="hide-sm"><button type="button" data-k="gf" data-i18n="th_gf">A</button></th>
+            <th class="hide-sm"><button type="button" data-k="ga" data-i18n="th_ga">Y</button></th>
+            <th><button type="button" data-k="gd" data-i18n="th_gd">Av</button></th>
+            <th><button type="button" data-k="pts" data-i18n="th_pts">P</button></th>
+            <th class="hide-sm" data-i18n="th_last5">Son 5</th>
+            <th><span class="eyebrow" style="font-size:11px">★</span></th>
+          </tr></thead>
+          <tbody><tr><td colspan="12" class="status" data-i18n="rows_loading">18 takımın puan durumu yükleniyor</td></tr></tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span style="--zc:var(--z-ucl)" data-i18n="z_ucl">Şampiyonlar Ligi lig aşaması</span>
+        <span style="--zc:var(--z-uq)" data-i18n="z_uq">Şampiyonlar Ligi 3. ön eleme</span>
+        <span style="--zc:var(--z-uel)" data-i18n="z_uel">Avrupa Ligi 2. ön eleme</span>
+        <span style="--zc:var(--z-uecl)" data-i18n="z_uecl">Konferans Ligi 2. ön eleme</span>
+        <span style="--zc:var(--z-rel)" data-i18n="z_rel">1. Lig'e düşme</span>
+      </div>
+    </div>
+    <p class="note" id="form-note"></p>
+  </section>
+
+  <section data-view="fikstur" id="v-fikstur" hidden>
+    <div class="sec-head">
+      <div><h2 data-i18n="fx_title">Fikstür &amp; Sonuçlar</h2><p id="fx-sub"></p></div>
+      <div class="weeks" id="weeks" role="group" data-i18n-aria="week_pick"></div>
+    </div>
+    <div class="matches" id="matches"></div>
+    <p class="note" id="weeknote"></p>
+  </section>
+
+  <section data-view="istatistik" id="v-istatistik" hidden>
+    <div class="sec-head"><div><h2 data-i18n="stats">İstatistik</h2><p id="st-sub"></p></div></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="ph"><h3 data-i18n="top_scorers">Gol Krallığı</h3><span class="eyebrow" data-i18n="goals_apps">Gol · maç</span></div>
+        <ol class="scorers" id="scorers"></ol>
+      </div>
+      <div class="panel">
+        <div class="ph"><h3 data-i18n="att_def">Hücum ve Savunma</h3><span class="eyebrow" data-i18n="sc_cc">Atılan × yenilen</span></div>
+        <div class="chart" id="scatter"></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="ph"><h3 data-i18n="ppg">Maç Başına Puan</h3><span class="eyebrow" data-i18n="ppg_short">P / O</span></div>
+        <div class="hbars" id="ppg"></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h3 data-i18n="season_notes">Sezonun Notları</h3></div>
+        <ul class="facts" id="facts"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section data-view="takimlar" id="v-takimlar" hidden>
+    <div class="sec-head"><div><h2 data-i18n="teams_title">Takımlar</h2><p data-i18n="teams_sub">18 kulüp; şehir, stat ve teknik direktör bilgileri. Detay için karta tıkla. Armalar bu sayfa için çizilmiş, kulüp renklerinde temsili rozetlerdir.</p></div></div>
+    <div class="teams" id="teams"></div>
+  </section>
+</main>
+
+<footer><div class="wrap" id="foot" data-i18n="foot_short">
+  Bağımsız taraftar sayfası; resmi kurum veya kulüplerle bağlantısı yoktur.
+</div></footer>
+
+<dialog id="dlg" aria-labelledby="dlg-title"></dialog>
+
+<script>
+/* ---- dil / language ---- */
+const I18N = {
+  tr:{
+    locale:"tr-TR", sections:"Bölümler", lang_group:"Dil",
+    nav_puan:"Puan Durumu", nav_fikstur:"Fikstür", nav_istatistik:"İstatistik", nav_takimlar:"Takımlar",
+    loading:"Veriler yükleniyor", feat_loading:"Öne çıkan maç yükleniyor", standings:"Puan Durumu", tbl_loading:"Tablo yükleniyor.",
+    view_group:"Tablo görünümü", vw_all:"Tümü", vw_top:"Zirve", vw_bot:"Düşme hattı",
+    th_team:"Takım", th_p:"O", th_w:"G", th_d:"B", th_l:"M", th_gf:"A", th_ga:"Y", th_gd:"Av", th_pts:"P", th_last5:"Son 5",
+    rows_loading:"18 takımın puan durumu yükleniyor",
+    z_ucl:"Şampiyonlar Ligi lig aşaması", z_uq:"Şampiyonlar Ligi 3. ön eleme", z_uel:"Avrupa Ligi 2. ön eleme", z_uecl:"Konferans Ligi 2. ön eleme", z_rel:"1. Lig'e düşme",
+    form_note:(a,b)=>`O: oynanan · G: galibiyet · B: beraberlik · M: mağlubiyet · A/Y: atılan/yenilen gol · Av: averaj. Son 5 kutuları ${a}–${b}. haftaları gösterir; gri kutu o maçın skorunun elimizde olmadığı anlamına gelir.`,
+    fx_title:"Fikstür & Sonuçlar", fx_sub:w=>w?`Saatler Türkiye saatiyle. Sıradaki hafta: ${w}.`:"Saatler Türkiye saatiyle.", week_pick:"Hafta seç",
+    stats:"İstatistik", top_scorers:"Gol Krallığı", goals_apps:"Gol · maç", att_def:"Hücum ve Savunma", sc_cc:"Atılan × yenilen",
+    ppg:"Maç Başına Puan", ppg_short:"P / O", season_notes:"Sezonun Notları", teams_title:"Takımlar",
+    teams_sub:"18 kulüp; şehir, stat ve teknik direktör bilgileri. Detay için karta tıkla. Armalar bu sayfa için çizilmiş, kulüp renklerinde temsili rozetlerdir.",
+    foot_short:"Bağımsız taraftar sayfası; resmi kurum veya kulüplerle bağlantısı yoktur.",
+    foot:"Bağımsız taraftar sayfası; resmi kurum veya kulüplerle bağlantısı yoktur. Armalar kulüp renklerinde çizilmiş temsili rozetlerdir. Sonuçlar, puan durumu ve gol krallığı her 30 dakikada bir Vikipedi'den otomatik alınır; bir skor, Vikipedi'ye eklendikten sonra görünür, canlı değildir. Vikipedi içeriği CC BY-SA 4.0 lisanslıdır. Kaynaklar: ",
+    tba_time:"Saat belli değil", overdue:"Bazı maç sonuçları henüz Vikipedi'ye eklenmedi",
+    foot_end:". Kesin bilgi için resmi TFF sayfasına bakın.",
+    updated:s=>`Güncellendi: ${s}`, upd_title:"Veriler 30 dakikada bir Vikipedi'den kontrol edilir; bu saat son değişikliği gösterir",
+    live:"Canlı", week_lbl:w=>`${w}. Hafta`, rose:n=>`Canlı: ${n} sıra yükseldi`, fell:n=>`Canlı: ${n} sıra düştü`, playing:s=>`Şu an oynuyor: ${s}`,
+    no_data:"Veri yok", star:n=>`${n} takımını işaretle`, crest:n=>`${n} arması`,
+    no_fx:"Sıradaki haftanın programı henüz açıklanmadı.", wotm:"Haftanın maçı", derby:"Haftanın derbisi",
+    pos_pts:(p,pts)=>`${p}. sıra · ${pts} puan`, mw:w=>`${w}. hafta`,
+    in_play:"Maç oynanıyor", played:"Oynandı", next_upd:"skor bir sonraki güncellemede", u_d:"gün", u_h:"saat", u_m:"dk",
+    fx_note:"Saatin altındaki sayılar takımların lig sırası. Skorlar maç bitip Vikipedi'ye eklenince görünür.",
+    st_sub:(g,w)=>`${g} maç sonrası, ${w}. hafta sonu.`, k_games:"oynanan maç", k_goals:"toplam gol", k_gpg:"maç başına gol", k_gap:n=>`liderin farkı · ${n}`,
+    apps:n=>`${n} maç`, ch_good:"Çok atan, az yiyen", ch_bad:"Az atan, çok yiyen", ch_x:"Atılan gol →", ch_y:"← Yenilen gol",
+    ch_tip:(n,f,a)=>`${n}: ${f} attı, ${a} yedi`, ch_aria:"Takımların atılan ve yenilen golleri",
+    f_att:"En golcü takım", f_def:"En az gol yiyen", goals_n:n=>`${n} gol`, f_gap:p=>`Düşme hattına uzaklık (${p}.)`, f_gap_v:(n,x)=>`${n} · ${x} puan önde`,
+    d_pos:(c,p)=>`${c} · ${p}. sıra`, d_pts:"puan", d_wdl:"G-B-M", d_goals:"gol", d_ppg:"puan/maç", d_coach:"Teknik direktör", d_stadium:"Stat", d_cap:"Kapasite",
+    d_scorers:"Gol krallığında", d_next:"Sıradaki maç", d_recent:"Son maçlar", d_wk:w=>`${w}. hf`, close:"Kapat",
+    tbl_live:n=>`Canlı tablo: ${n} maç sürüyor, anlık skorlarla hesaplandı. ▲▼ maç öncesine göre sıra değişimi.`,
+    tbl_sub:w=>`${w}. hafta sonu. Bir takıma tıklayınca detayı açılır; ★ ile takımını işaretle.`,
+    load_err:"Veriler yüklenemedi. Sayfayı yenileyip tekrar deneyin.",
+    RL:{W:"G",D:"B",L:"M",N:"–"},
+  },
+  en:{
+    locale:"en-GB", sections:"Sections", lang_group:"Language",
+    nav_puan:"Table", nav_fikstur:"Fixtures", nav_istatistik:"Stats", nav_takimlar:"Clubs",
+    loading:"Loading data", feat_loading:"Loading featured match", standings:"League Table", tbl_loading:"Loading table.",
+    view_group:"Table view", vw_all:"All", vw_top:"Top", vw_bot:"Relegation",
+    th_team:"Club", th_p:"P", th_w:"W", th_d:"D", th_l:"L", th_gf:"GF", th_ga:"GA", th_gd:"GD", th_pts:"Pts", th_last5:"Last 5",
+    rows_loading:"Loading the table for 18 clubs",
+    z_ucl:"Champions League league phase", z_uq:"Champions League 3rd qualifying round", z_uel:"Europa League 2nd qualifying round", z_uecl:"Conference League 2nd qualifying round", z_rel:"Relegation to the 1. Lig",
+    form_note:(a,b)=>`P: played · W: won · D: drawn · L: lost · GF/GA: goals for/against · GD: goal difference. Last 5 shows matchweeks ${a}–${b}; a grey box means we don't have that match's score.`,
+    fx_title:"Fixtures & Results", fx_sub:w=>w?`Kick-off times in Turkey time (UTC+3). Next matchweek: ${w}.`:"Kick-off times in Turkey time (UTC+3).", week_pick:"Choose matchweek",
+    stats:"Stats", top_scorers:"Top Scorers", goals_apps:"Goals · apps", att_def:"Attack and Defence", sc_cc:"Scored × conceded",
+    ppg:"Points per Game", ppg_short:"Pts / P", season_notes:"Season Notes", teams_title:"Clubs",
+    teams_sub:"18 clubs with city, stadium and head coach. Tap a card for details. The crests are badges drawn for this page in each club's colours, not official logos.",
+    foot_short:"Independent fan page; not affiliated with any official body or club.",
+    foot:"Independent fan page; not affiliated with any official body or club. Crests are badges drawn in club colours. Results, the table and top scorers are taken automatically from Wikipedia every 30 minutes; a score appears once it has been added to Wikipedia, not live. Wikipedia content is licensed CC BY-SA 4.0. Sources: ",
+    tba_time:"Time TBC", overdue:"Some results haven't been added to Wikipedia yet",
+    foot_end:". Check the official TFF site for definitive information.",
+    updated:s=>`Updated: ${s}`, upd_title:"Data is checked against Wikipedia every 30 minutes; this shows the last change",
+    live:"Live", week_lbl:w=>`Matchweek ${w}`, rose:n=>`Live: up ${n}`, fell:n=>`Live: down ${n}`, playing:s=>`Playing now: ${s}`,
+    no_data:"No data", star:n=>`Mark ${n} as your club`, crest:n=>`${n} crest`,
+    no_fx:"The next matchweek's schedule hasn't been announced yet.", wotm:"Match of the week", derby:"Derby of the week",
+    pos_pts:(p,pts)=>`${ord(p)} · ${pts} pts`, mw:w=>`Matchweek ${w}`,
+    in_play:"In play", played:"Played", next_upd:"score in next update", u_d:"days", u_h:"hrs", u_m:"min",
+    fx_note:"The numbers under the kick-off time are the clubs' league positions. Scores appear once the match is over and added to Wikipedia.",
+    st_sub:(g,w)=>`After ${g} matches, end of matchweek ${w}.`, k_games:"matches played", k_goals:"total goals", k_gpg:"goals per match", k_gap:n=>`leader's margin · ${n}`,
+    apps:n=>`${n} apps`, ch_good:"Score lots, concede few", ch_bad:"Score few, concede lots", ch_x:"Goals scored →", ch_y:"← Goals conceded",
+    ch_tip:(n,f,a)=>`${n}: scored ${f}, conceded ${a}`, ch_aria:"Goals scored and conceded by each club",
+    f_att:"Best attack", f_def:"Best defence", goals_n:n=>`${n} goals`, f_gap:p=>`Gap to relegation (${ord(p)})`, f_gap_v:(n,x)=>`${n} · ${x} pts clear`,
+    d_pos:(c,p)=>`${c} · ${ord(p)}`, d_pts:"points", d_wdl:"W-D-L", d_goals:"goals", d_ppg:"pts/game", d_coach:"Head coach", d_stadium:"Stadium", d_cap:"Capacity",
+    d_scorers:"Top scorers", d_next:"Next match", d_recent:"Recent matches", d_wk:w=>`MW${w}`, close:"Close",
+    tbl_live:n=>`Live table: ${n} ${n===1?"match":"matches"} in play, calculated from current scores. ▲▼ show movement since kick-off.`,
+    tbl_sub:w=>`After matchweek ${w}. Tap a club for details; mark your club with ★.`,
+    load_err:"Couldn't load the data. Refresh the page and try again.",
+    RL:{W:"W",D:"D",L:"L",N:"–"},
+  },
+};
+function ord(n){ const s=["th","st","nd","rd"], v=n%100; return n+(s[(v-20)%10]||s[v]||s[0]); }
+const TR_MON={Oca:"Jan",Şub:"Feb",Mar:"Mar",Nis:"Apr",May:"May",Haz:"Jun",Tem:"Jul",Ağu:"Aug",Eyl:"Sep",Eki:"Oct",Kas:"Nov",Ara:"Dec"};
+const FACT_EN={"En farklı skor":"Biggest win","En gollü maç":"Highest-scoring match","En uzun galibiyet serisi":"Longest winning run","En uzun yenilmezlik serisi":"Longest unbeaten run","En uzun mağlubiyet serisi":"Longest losing run","En uzun galibiyetsizlik serisi":"Longest winless run"};
+// Türkçe veri metnini İngilizceye uyarlar (ay kısaltmaları, "maç")
+const enText=s=>String(s).replace(/(?<!\p{L})(Oca|Şub|Mar|Nis|May|Haz|Tem|Ağu|Eyl|Eki|Kas|Ara)(?!\p{L})/gu,m=>TR_MON[m]).replace(/(\d+) maç(?!\p{L})/gu,"$1 matches");
+
+let LANG="tr";
+try{ const s=localStorage.getItem("lt-lang"); if(s==="en"||s==="tr") LANG=s; }catch(e){}
+const t=(k,...a)=>{ const v=(I18N[LANG][k]??I18N.tr[k]); return typeof v==="function"?v(...a):v; };
+function applyStatic(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-aria]").forEach(el=>{ el.setAttribute("aria-label",t(el.dataset.i18nAria)); });
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===LANG));
+}
+document.querySelector(".lang").addEventListener("click",e=>{
+  const b=e.target.closest("[data-lang]"); if(!b||b.dataset.lang===LANG) return;
+  LANG=b.dataset.lang; try{ localStorage.setItem("lt-lang",LANG); }catch(e){}
+  applyStatic(); if(raw) boot(raw);
+});
+
+/* ---- görsel kimlik: kulüp renkleri ve arma deseni (sayfaya ait, veri dosyasında değil) ---- */
+const LOOK = {
+  gs:["split","#A90432","#FDB912"], ts:["stripes","#6C1D45","#57A0D3"], bjk:["stripes","#141414","#F2F2F2"],
+  amed:["band","#00843D","#D71920"], kas:["hoops","#003C7E","#E9EEF6"], fb:["stripes","#0B2D6B","#F2CF00"],
+  ibfk:["split","#E56B25","#1C2E5B"], koc:["stripes","#00703C","#141414"], goz:["split","#E3BE00","#D2001F"],
+  riz:["band","#00843D","#0055A4"], cor:["chevron","#C8102E","#141414"], gen:["split","#E30613","#141414"],
+  erz:["chevron","#0067B1","#F2F2F2"], ala:["band","#F47920","#00843D"], kon:["chevron","#00843D","#F2F2F2"],
+  gaz:["quarter","#D2001F","#141414"], sam:["hoops","#E30A17","#F2F2F2"], eyup:["quarter","#6A2C8F","#F4D03F"],
+};
+const SHIELD = "M20 1.5 L38 6.5 V22 C38 33.5 30.5 40.5 20 44.5 C9.5 40.5 2 33.5 2 22 V6.5 Z";
+function pattern(p,a,b){
+  switch(p){
+    case "split": return `<rect width="20" height="46" fill="${a}"/><rect x="20" width="20" height="46" fill="${b}"/>`;
+    case "stripes": return `<rect width="40" height="46" fill="${a}"/><rect x="8" width="8" height="46" fill="${b}"/><rect x="24" width="8" height="46" fill="${b}"/>`;
+    case "band": return `<rect width="40" height="46" fill="${a}"/><polygon points="0,30 40,8 40,20 0,42" fill="${b}"/>`;
+    case "hoops": return `<rect width="40" height="46" fill="${a}"/><rect y="12" width="40" height="7" fill="${b}"/><rect y="27" width="40" height="7" fill="${b}"/>`;
+    case "chevron": return `<rect width="40" height="46" fill="${a}"/><polygon points="0,12 20,24 40,12 40,21 20,33 0,21" fill="${b}"/>`;
+    case "quarter": return `<rect width="40" height="46" fill="${a}"/><rect x="20" width="20" height="23" fill="${b}"/><rect y="23" width="20" height="23" fill="${b}"/>`;
+  }
+}
+function buildSprite(teams){
+  let s="<defs>";
+  for(const id of Object.keys(teams)){
+    const [p,a,b]=LOOK[id]||["split","#5b6a61","#b8c1ba"];
+    const sh=teams[id].s; const fs=sh.length>3?10:sh.length>2?12:14;
+    s+=`<clipPath id="cl-${id}"><path d="${SHIELD}"/></clipPath>
+    <symbol id="cr-${id}" viewBox="0 0 40 46"><g clip-path="url(#cl-${id})">${pattern(p,a,b)}<path d="M2 6.5 L20 1.5 L38 6.5 V10 L20 5 L2 10Z" fill="rgba(255,255,255,.22)"/></g>
+    <path d="${SHIELD}" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="1.2"/>
+    <text x="20" y="${26+fs*0.18}" text-anchor="middle" font-family="Barlow Condensed,Arial Narrow,Arial,sans-serif" font-weight="800" font-size="${fs}" fill="#fff" stroke="rgba(0,0,0,.6)" stroke-width="2.4" paint-order="stroke" stroke-linejoin="round">${esc(sh)}</text></symbol>`;
+  }
+  $("#sprite").innerHTML=s+"</defs>";
+}
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+// Fikstür zamanı üç biçimde gelebilir: tam ISO (saatli), sadece tarih (YYYY-MM-DD) ya da boş
+const hasTime = iso => /T\d\d:\d\d/.test(iso||"");
+const kickoff = iso => !iso ? null : new Date(hasTime(iso) ? iso : iso+"T00:00:00+03:00");
+const fmtTime = iso => hasTime(iso) ? new Date(iso).toLocaleTimeString(t("locale"),{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Europe/Istanbul"}) : t("tba_time");
+const dayLabel = f => LANG==="tr" ? f[0] : (f[1] ? kickoff(f[1]).toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",timeZone:"Europe/Istanbul"}) : "Date TBC");
+const dec = (v,n=2) => LANG==="tr" ? v.toFixed(n).replace(".",",") : v.toFixed(n);
+const ZVAR = {ucl:"--z-ucl",uq:"--z-uq",uel:"--z-uel",uecl:"--z-uecl",rel:"--z-rel"};
+const RL = k => t("RL")[k];
+
+let raw, D, T, rows, byId;
+const crest = (id, cls="") => `<svg class="crest ${cls}" viewBox="0 0 40 46" role="img" aria-label="${esc(t("crest",T[id]?.n||id))}"><use href="#cr-${id}"/></svg>`;
+const zoneVar = pos => { const z=D.zones[String(pos)]; return z?ZVAR[z]:null; };
+
+function resultFor(id,m){ const home=m[2]===id; const f=home?m[4]:m[5], a=home?m[5]:m[4]; return f>a?"W":f<a?"L":"D"; }
+function formWeeks(){ const ws=[]; for(let w=D.weekDone; w>0 && ws.length<5; w--) ws.unshift(w); return ws; }
+function form(id){
+  return formWeeks().map(w=>{ const m=D.results.find(x=>x[0]===w&&(x[2]===id||x[3]===id)); return m?{r:resultFor(id,m),m}:{r:"N"}; });
+}
+
+/* favorites (per viewer) */
+let favs=new Set();
+try{ favs=new Set(JSON.parse(localStorage.getItem("lt-favs")||"[]")); }catch(e){}
+function saveFavs(){ try{ localStorage.setItem("lt-favs",JSON.stringify([...favs])); }catch(e){} }
+
+/* standings */
+let sortK="pos", sortDir=1, view="all";
+function renderTable(){
+  let list=[...rows];
+  if(view==="top") list=list.filter(r=>r.pos<=6);
+  if(view==="bot") list=list.filter(r=>r.pos>=rows.length-5);
+  list.sort((a,b)=>{ const x=a[sortK], y=b[sortK]; return (typeof x==="string"? x.localeCompare(y,t("locale")) : x-y)*sortDir || a.pos-b.pos; });
+  $("#standings tbody").innerHTML=list.map(r=>{
+    const z=zoneVar(r.pos);
+    return `<tr class="${favs.has(r.id)?"fav":""}">
+      <td class="pos" style="${z?`--zc:var(${z})`:""}">${r.pos}${r.basePos>r.pos?`<span class="mv up" title="${esc(t("rose",r.basePos-r.pos))}">▲</span>`:r.basePos<r.pos?`<span class="mv dn" title="${esc(t("fell",r.pos-r.basePos))}">▼</span>`:""}</td>
+      <td class="team"><button type="button" class="tbtn" data-team="${r.id}">${crest(r.id)}<span class="nm">${esc(r.name)}</span>${r.live?`<span class="ldot" title="${esc(t("playing",r.live))}"></span>`:""}</button></td>
+      <td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td>
+      <td class="hide-sm">${r.gf}</td><td class="hide-sm">${r.ga}</td>
+      <td class="gd ${r.gd>0?"pos-v":r.gd<0?"neg-v":""}">${r.gd>0?"+":""}${r.gd}</td>
+      <td class="pts">${r.pts}</td>
+      <td class="hide-sm"><div class="form">${form(r.id).map(x=>`<i class="${x.r}" title="${x.m?esc(T[x.m[2]].n+" "+x.m[4]+"-"+x.m[5]+" "+T[x.m[3]].n):esc(t("no_data"))}">${RL(x.r)}</i>`).join("")}</div></td>
+      <td><button type="button" class="star" data-fav="${r.id}" aria-pressed="${favs.has(r.id)}" aria-label="${esc(t("star",r.name))}">★</button></td>
+    </tr>`;}).join("");
+  document.querySelectorAll("#standings thead button").forEach(b=>{
+    if(b.dataset.k===sortK) b.setAttribute("aria-sort",sortDir===1?"ascending":"descending"); else b.removeAttribute("aria-sort");
+  });
+}
+document.querySelector("#standings thead").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-k]"); if(!b||!D) return;
+  const k=b.dataset.k;
+  if(sortK===k) sortDir*=-1; else { sortK=k; sortDir=(k==="pos"||k==="name"||k==="l"||k==="ga")?1:-1; }
+  renderTable();
+});
+[["vw-all","all"],["vw-top","top"],["vw-bot","bot"]].forEach(([id,v])=>{
+  $("#"+id).addEventListener("click",()=>{ if(!D) return; view=v; document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.id===id)); renderTable(); });
+});
+document.addEventListener("click",e=>{
+  if(!D) return;
+  const s=e.target.closest("[data-fav]");
+  if(s){ const id=s.dataset.fav; favs.has(id)?favs.delete(id):favs.add(id); saveFavs(); renderTable(); return; }
+  const tm=e.target.closest("[data-team]");
+  if(tm) openTeam(tm.dataset.team);
+});
+
+/* header: ticker + freshness */
+function renderTicker(){
+  const up=new Date(D.updated);
+  // Sonucu 4 saattir gelmeyen (saati belli) bir maç varsa veriyi "gecikmeli" göster
+  const overdue=(D.fixtures||[]).some(f=>hasTime(f[1]) && Date.now()-kickoff(f[1])>4*36e5);
+  const stamp=up.toLocaleString(t("locale"),{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Europe/Istanbul"});
+  const lw=Math.max(D.weekDone, ...D.results.map(m=>m[0]));
+  const last=D.results.filter(m=>m[0]===lw).slice(-9);
+  const lives=liveFx();
+  $("#ticker").innerHTML=`<span class="live ${overdue?"stale":""}" title="${esc(t(overdue?"overdue":"upd_title"))}">${esc(t("updated",stamp))}</span>`+
+    (lives.length?`<span class="lbl">${t("live")}</span>`+lives.map(f=>`<span class="it on">${esc(T[f[2]].s)} <b>${f[4].hs}–${f[4].as}</b> ${esc(T[f[3]].s)} <small>${esc(f[4].min||"")}</small></span>`).join(""):"")+
+    `<span class="lbl">${esc(t("week_lbl",lw))}</span>`+
+    last.map(m=>`<span class="it">${esc(T[m[2]].s)} <b>${m[4]}–${m[5]}</b> ${esc(T[m[3]].s)}</span>`).join("");
+  $("#season").textContent="Süper Lig "+D.season;
+}
+
+/* featured match + countdown */
+let FEAT=null;
+function pickFeatured(){
+  const fx=D.fixtures||[]; if(!fx.length) return null;
+  if(Number.isInteger(D.featured) && fx[D.featured]) return fx[D.featured];
+  return [...fx].sort((a,b)=>(byId[a[2]].pos+byId[a[3]].pos)-(byId[b[2]].pos+byId[b[3]].pos))[0];
+}
+function featLabel(){
+  if(!(Number.isInteger(D.featured)&&D.featuredLabel)) return t("wotm");
+  if(LANG==="tr") return D.featuredLabel;
+  return D.featuredLabelEn || (D.featuredLabel==="Haftanın derbisi"?t("derby"):t("wotm"));
+}
+function renderDerby(){
+  FEAT=pickFeatured();
+  if(!FEAT){ $("#derby").innerHTML=`<div class="status" style="grid-column:1/-1">${esc(t("no_fx"))}</div>`; return; }
+  const h=byId[FEAT[2]], a=byId[FEAT[3]];
+  $("#derby").innerHTML=`
+    <div class="side">${crest(h.id,"lg")}<div><div class="tn">${esc(h.name)}</div><div class="meta">${esc(t("pos_pts",h.pos,h.pts))}</div></div></div>
+    <div class="mid"><div class="eyebrow">${esc(t("mw",D.fixturesWeek))} · ${esc(featLabel())}</div>${FEAT[4]?`<div class="livescore">${FEAT[4].hs} – ${FEAT[4].as}</div><div><span class="lv">${esc(FEAT[4].min||t("live"))}</span></div>`:`<div class="cd" id="cd"></div>`}<div class="when">${esc(dayLabel(FEAT))} · ${fmtTime(FEAT[1])} · ${esc(T[h.id].st)}</div></div>
+    <div class="side r"><div><div class="tn">${esc(a.name)}</div><div class="meta">${esc(t("pos_pts",a.pos,a.pts))}</div></div>${crest(a.id,"lg")}</div>`;
+  tick();
+}
+function tick(){
+  const el=$("#cd"); if(!el||!FEAT) return;
+  if(!FEAT[1]){ el.innerHTML=`<div><b>${esc(t("tba_time"))}</b></div>`; return; }
+  let d=kickoff(FEAT[1])-Date.now();
+  if(d<=0){ el.innerHTML=`<div><b>${esc(d>-2*36e5?t("in_play"):t("played"))}</b><small>${esc(t("next_upd"))}</small></div>`; return; }
+  el.innerHTML=[[864e5,t("u_d")],[36e5,t("u_h")],[6e4,t("u_m")]].map(([ms,l])=>{const v=Math.floor(d/ms); d-=v*ms; return `<div><b>${String(v).padStart(2,"0")}</b><small>${l}</small></div>`;}).join("");
+}
+setInterval(tick,30000);
+
+/* fixtures */
+let week=null;
+function weekList(){ const s=new Set(D.results.map(m=>m[0])); if(D.fixtures?.length) s.add(D.fixturesWeek); return [...s].sort((a,b)=>a-b); }
+function renderWeeks(){
+  $("#weeks").innerHTML=weekList().map(w=>`<button type="button" data-w="${w}" class="${w===D.fixturesWeek?"next":""}" aria-pressed="${w===week}">${esc(LANG==="tr"?t("week_lbl",w):"MW "+w)}</button>`).join("");
+}
+$("#weeks").addEventListener("click",e=>{ const b=e.target.closest("[data-w]"); if(!b) return; week=+b.dataset.w; renderWeeks(); renderMatches(); });
+function teamCell(id,cls,side){
+  const nm=`<span class="nm">${esc(T[id].n)}</span>`;
+  return `<button type="button" class="${side} tbtn ${cls}" data-team="${id}" style="min-width:0">${side==="h"?crest(id)+nm:nm+crest(id)}</button>`;
+}
+function weekNote(w){
+  const k=String(w), en=LANG==="en";
+  return [(en?D.notesEn:D.notes)?.[k], (en?D.autoNotesEn:D.autoNotes)?.[k]].filter(Boolean).join(" ");
+}
+function renderMatches(){
+  let html="", note=weekNote(week);
+  const played=D.results.filter(m=>m[0]===week);
+  if(week===D.fixturesWeek && D.fixtures?.length){
+    played.forEach(m=>{ html+=matchCard(m); });
+    let day="";
+    D.fixtures.forEach(f=>{
+      const dl=dayLabel(f);
+      if(dl!==day){ day=dl; html+=`<div class="daylbl eyebrow">${esc(day)}</div>`; }
+      const big=FEAT&&f[2]===FEAT[2]&&f[3]===FEAT[3], L=f[4];
+      html+= L
+        ? `<div class="match onair ${big?"big":""}">${teamCell(f[2],"","h")}<div class="sc on">${L.hs}–${L.as}<div><span class="lv" style="background:transparent;padding:0">${esc(L.min||t("live"))}</span></div></div>${teamCell(f[3],"","a")}${goalsHtml(L.goals)}</div>`
+        : `<div class="match ${big?"big":""}">${teamCell(f[2],"","h")}<div class="sc up">${fmtTime(f[1])}<small>${byId[f[2]].basePos}. – ${byId[f[3]].basePos}.</small></div>${teamCell(f[3],"","a")}</div>`;
+    });
+    note=(note?note+" ":"")+t("fx_note");
+  } else html=played.map(matchCard).join("");
+  $("#matches").innerHTML=html; $("#weeknote").textContent=note;
+}
+function matchCard(m){
+  const hc=m[4]>m[5]?"w":m[4]<m[5]?"l":"", ac=m[5]>m[4]?"w":m[5]<m[4]?"l":"";
+  return `<div class="match">${teamCell(m[2],hc,"h")}<div class="sc">${m[4]}–${m[5]}</div>${teamCell(m[3],ac,"a")}${goalsHtml(m[6])}</div>`;
+}
+function goalsHtml(gs){
+  if(!Array.isArray(gs)||!gs.length) return "";
+  return `<div class="gl">${gs.map(g=>`<span class="${g[0]==="a"?"ga":"gh"}">⚽ ${esc(g[1])} ${esc(g[2]||"")}</span>`).join("")}</div>`;
+}
+function liveFx(){ return (D.fixtures||[]).filter(f=>f[4]&&Number.isFinite(f[4].hs)&&Number.isFinite(f[4].as)); }
+
+/* stats */
+function seasonFacts(){
+  const f=D.facts||[];
+  if(LANG==="tr") return f;
+  if(Array.isArray(D.factsEn)&&D.factsEn.length) return D.factsEn;
+  return f.map(([a,b])=>[FACT_EN[a]||a, enText(b)]);
+}
+function renderStats(){
+  const games=rows.reduce((a,r)=>a+r.p,0)/2, goals=rows.reduce((a,r)=>a+r.gf,0);
+  $("#st-sub").textContent=t("st_sub",games,D.weekDone);
+  $("#kpis").innerHTML=[[games,t("k_games")],[goals,t("k_goals")],[dec(goals/games),t("k_gpg")],[rows[0].pts-rows[1].pts,t("k_gap",rows[0].name)]]
+    .map(([b,s])=>`<div class="kpi"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+  const sc=D.scorers||[], max=sc[0]?.[3]||1;
+  $("#scorers").innerHTML=sc.map((s,i)=>`<li>
+    <span class="rk">${i+1}</span>${crest(s[1])}
+    <div class="who"><b>${esc(s[0])}</b><small>${esc(T[s[1]]?.n||"")}</small><div class="bar"><i style="width:${s[3]/max*100}%"></i></div></div>
+    <div class="g">${s[3]}<small>${esc(t("apps",s[2]))}</small></div></li>`).join("");
+
+  const W=480,H=320,L=40,Rt=16,Tp=16,B=40;
+  const hi=Math.max(...rows.map(r=>Math.max(r.gf,r.ga)));
+  const top=Math.ceil((hi+2)/5)*5;
+  const sx=v=>L+v/top*(W-L-Rt), sy=v=>Tp+v/top*(H-Tp-B);
+  let g="";
+  for(let v=0;v<=top;v+=5){
+    g+=`<line x1="${sx(v)}" y1="${Tp}" x2="${sx(v)}" y2="${H-B}" stroke="var(--line)"/><line x1="${L}" y1="${sy(v)}" x2="${W-Rt}" y2="${sy(v)}" stroke="var(--line)"/>`;
+    g+=`<text x="${sx(v)}" y="${H-B+16}" text-anchor="middle">${v}</text><text x="${L-8}" y="${sy(v)+4}" text-anchor="end">${v}</text>`;
+  }
+  const avg=goals/rows.length;
+  g+=`<line x1="${sx(avg)}" y1="${Tp}" x2="${sx(avg)}" y2="${H-B}" stroke="var(--muted)" stroke-dasharray="3 3"/><line x1="${L}" y1="${sy(avg)}" x2="${W-Rt}" y2="${sy(avg)}" stroke="var(--muted)" stroke-dasharray="3 3"/>`;
+  g+=`<text x="${W-Rt-4}" y="${Tp+12}" text-anchor="end" class="tl" style="fill:var(--win)">${esc(t("ch_good"))}</text><text x="${L+4}" y="${H-B-6}" class="tl" style="fill:var(--loss)">${esc(t("ch_bad"))}</text>`;
+  rows.forEach(r=>{ const x=sx(r.gf), y=sy(r.ga), c=(LOOK[r.id]||[0,"#5b6a61"])[1];
+    g+=`<g><title>${esc(t("ch_tip",r.name,r.gf,r.ga))}</title><circle cx="${x}" cy="${y}" r="6" fill="${c}" stroke="var(--surface)" stroke-width="1.5"/><text x="${x+8}" y="${y+3.5}" class="tl">${esc(T[r.id].s)}</text></g>`; });
+  g+=`<text x="${(L+W-Rt)/2}" y="${H-6}" text-anchor="middle">${esc(t("ch_x"))}</text><text transform="translate(12 ${(Tp+H-B)/2}) rotate(-90)" text-anchor="middle">${esc(t("ch_y"))}</text>`;
+  $("#scatter").innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t("ch_aria"))}">${g}</svg>`;
+
+  $("#ppg").innerHTML=[...rows].sort((a,b)=>b.pts/b.p-a.pts/a.p).map(r=>{ const v=r.pts/r.p, z=zoneVar(r.pos);
+    return `<div class="r"><span class="t">${esc(r.name)}</span><span class="trk"><i style="width:${v/3*100}%;background:${z?`var(${z})`:"var(--muted)"}"></i></span><span class="v">${dec(v)}</span></div>`;}).join("");
+
+  const bestA=[...rows].sort((a,b)=>b.gf-a.gf)[0], bestD=[...rows].sort((a,b)=>a.ga-b.ga)[0];
+  const n=rows.length, safe=rows[n-4], drop=rows[n-3];
+  $("#facts").innerHTML=[
+    [t("f_att"),`${bestA.name} · ${t("goals_n",bestA.gf)}`],
+    [t("f_def"),`${bestD.name} · ${t("goals_n",bestD.ga)}`],
+    ...seasonFacts(),
+    [t("f_gap",safe.pos),t("f_gap_v",safe.name,safe.pts-drop.pts)],
+  ].map(([a,b])=>`<li><span>${esc(a)}</span><b>${esc(b)}</b></li>`).join("");
+}
+
+/* teams */
+function renderTeams(){
+  $("#teams").innerHTML=Object.keys(T).sort((a,b)=>T[a].n.localeCompare(T[b].n,t("locale"))).map(id=>
+    `<button type="button" class="tcard" data-team="${id}">${crest(id,"lg")}<span><b>${esc(T[id].n)}</b><small>${esc(T[id].city)}</small><small>${esc(T[id].co)}</small></span><span class="ps">${byId[id]?byId[id].pos+".":""}</span></button>`).join("");
+}
+
+/* team dialog */
+const dlg=$("#dlg");
+function openTeam(id){
+  const tm=T[id], r=byId[id];
+  const ms=D.results.filter(m=>m[2]===id||m[3]===id).sort((a,b)=>b[0]-a[0]);
+  const nx=(D.fixtures||[]).find(f=>f[2]===id||f[3]===id);
+  const sc=(D.scorers||[]).filter(s=>s[1]===id);
+  dlg.innerHTML=`<div class="dh">${crest(id,"xl")}<div><h3 id="dlg-title">${esc(tm.n)}</h3><p>${esc(t("d_pos",tm.city,r.pos))}</p></div><button type="button" class="x" aria-label="${esc(t("close"))}" id="dlg-x">✕</button></div>
+  <div class="db">
+    <div class="mini"><div><b>${r.pts}</b><span>${esc(t("d_pts"))}</span></div><div><b>${r.w}-${r.d}-${r.l}</b><span>${esc(t("d_wdl"))}</span></div><div><b>${r.gf}:${r.ga}</b><span>${esc(t("d_goals"))}</span></div><div><b>${dec(r.pts/r.p)}</b><span>${esc(t("d_ppg"))}</span></div></div>
+    <ul class="facts" style="padding:0">
+      <li><span>${esc(t("d_coach"))}</span><b>${esc(tm.co)}</b></li>
+      <li><span>${esc(t("d_stadium"))}</span><b>${esc(tm.st)}</b></li>
+      <li><span>${esc(t("d_cap"))}</span><b>${Number(tm.cap).toLocaleString(t("locale"))}</b></li>
+      ${sc.length?`<li><span>${esc(t("d_scorers"))}</span><b>${sc.map(s=>esc(s[0])+" · "+esc(t("goals_n",s[3]))).join("<br>")}</b></li>`:""}
+      ${nx?`<li><span>${esc(t("d_next"))}</span><b>${esc(T[nx[2]].n)} – ${esc(T[nx[3]].n)}<br><span style="font-weight:500">${esc(dayLabel(nx))} · ${fmtTime(nx[1])}</span></b></li>`:""}
+    </ul>
+    <div><div class="eyebrow" style="margin-bottom:8px">${esc(t("d_recent"))}</div><div class="rlist">${ms.map(m=>{
+      const res=resultFor(id,m), home=m[2]===id, opp=home?m[3]:m[2];
+      return `<div class="rr"><span class="wk">${esc(t("d_wk",m[0]))}</span><span class="form"><i class="${res}">${RL(res)}</i></span><span>${home?"":"@ "}${esc(T[opp].n)}</span><span class="rs">${m[4]}–${m[5]}</span></div>`;}).join("")}</div></div>
+  </div>`;
+  $("#dlg-x").addEventListener("click",()=>dlg.close());
+  dlg.showModal();
+}
+dlg.addEventListener("click",e=>{ if(e.target===dlg) dlg.close(); });
+
+/* routing */
+const VIEWS=["puan","fikstur","istatistik","takimlar"];
+function route(){
+  const v=VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):"puan";
+  document.querySelectorAll("section[data-view]").forEach(s=>s.hidden=s.dataset.view!==v);
+  document.querySelectorAll("nav a").forEach(a=>{ if(a.getAttribute("href")==="#"+v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+}
+addEventListener("hashchange",()=>{ route(); scrollTo(0,0); });
+applyStatic();
+route();
+
+/* load data */
+function boot(data){
+  raw=data; D=data; T=D.teams;
+  rows=D.table.map((r,i)=>({id:r[0],name:T[r[0]].n,pos:i+1,basePos:i+1,p:r[1],w:r[2],d:r[3],l:r[4],gf:r[5],ga:r[6],gd:r[5]-r[6],pts:r[7],live:""}));
+  byId=Object.fromEntries(rows.map(r=>[r.id,r]));
+  // canlı tablo: süren maçların anlık skorunu ekle
+  const lives=liveFx();
+  lives.forEach(f=>{
+    const L=f[4], h=byId[f[2]], a=byId[f[3]]; if(!h||!a) return;
+    const tag=`${T[f[2]].n} ${L.hs}–${L.as} ${T[f[3]].n} (${L.min||t("live")})`;
+    [[h,L.hs,L.as],[a,L.as,L.hs]].forEach(([r,gf,ga])=>{
+      r.p++; r.gf+=gf; r.ga+=ga; r.gd=r.gf-r.ga; r.live=tag;
+      if(gf>ga){r.w++; r.pts+=3;} else if(gf===ga){r.d++; r.pts+=1;} else r.l++;
+    });
+  });
+  if(lives.length){ rows.sort((x,y)=>y.pts-x.pts||y.gd-x.gd||y.gf-x.gf||x.basePos-y.basePos); rows.forEach((r,i)=>r.pos=i+1); }
+  if(week===null || !weekList().includes(week)) week=D.fixtures?.length?D.fixturesWeek:D.weekDone;
+  const fw=formWeeks();
+  $("#tbl-sub").textContent=lives.length ? t("tbl_live",lives.length) : t("tbl_sub",D.weekDone);
+  $("#form-note").textContent=t("form_note",fw[0],fw[fw.length-1]);
+  $("#fx-sub").textContent=t("fx_sub",D.fixtures?.length?D.fixturesWeek:0);
+  $("#foot").innerHTML=esc(t("foot"))+
+    (D.sources||[]).filter(s=>/^https:\/\//.test(s[1])).map(s=>`<a href="${esc(s[1])}" target="_blank" rel="noopener">${esc(s[0])}</a>`).join(", ")+esc(t("foot_end"));
+  buildSprite(T);
+  renderTicker(); renderTable(); renderDerby(); renderWeeks(); renderMatches(); renderStats(); renderTeams();
+}
+const getData=()=>fetch("data.json",{cache:"no-store"}).then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); });
+getData().then(boot).catch(()=>{
+  const msg=esc(t("load_err"));
+  $("#ticker").innerHTML=`<span class="live stale">${msg}</span>`;
+  $("#standings tbody").innerHTML=`<tr><td colspan="12" class="status">${msg}</td></tr>`;
+  $("#derby").innerHTML=`<div class="status" style="grid-column:1/-1">${msg}</div>`;
+});
+// açık sayfayı yeni veriyle tazele (dakikada bir kontrol)
+setInterval(()=>{
+  if(document.hidden||!D||dlg.open) return;
+  getData().then(n=>{ if(n.updated!==D.updated) boot(n); }).catch(()=>{});
+},60000);
+</script>
+
+</body>
+</html>
