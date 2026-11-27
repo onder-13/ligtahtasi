@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T22:29:46+03:00",
+ "updated": "2026-11-27T14:21:51+03:00",
  "season": "2026–27",
  "weekDone": 12,
  "_doc": {
@@ -2819,19 +2819,93 @@
   ],
   [
    12,
-   "22 Kas",
-   "ibfk",
-   "cor",
-   4,
-   2
+   "21 Kas",
+   "gen",
+   "gaz",
+   1,
+   0,
+   [
+    [
+     "h",
+     "Adama Traoré",
+     "9'"
+    ]
+   ]
   ],
   [
    12,
-   "22 Kas",
+   "21 Kas",
    "amed",
    "riz",
    0,
-   2
+   2,
+   [
+    [
+     "a",
+     "Ali Sowe",
+     "19'"
+    ],
+    [
+     "a",
+     "Ali Sowe",
+     "54'"
+    ]
+   ]
+  ],
+  [
+   12,
+   "21 Kas",
+   "gs",
+   "sam",
+   2,
+   1,
+   [
+    [
+     "h",
+     "Lucas Torreira",
+     "4'"
+    ],
+    [
+     "h",
+     "Yunus Akgün",
+     "53'"
+    ],
+    [
+     "a",
+     "Mohamed Bayo",
+     "57'"
+    ]
+   ]
+  ],
+  [
+   12,
+   "21 Kas",
+   "koc",
+   "fb",
+   2,
+   2,
+   [
+    [
+     "h",
+     "Berkan Kutlu",
+     "71'"
+    ],
+    [
+     "h",
+     "Matej Maglica",
+     "76'"
+    ],
+    [
+     "a",
+     "Milan Škriniar",
+     "61'"
+    ],
+    [
+     "a",
+     "Mason Greenwood",
+     "90'"
+    ]
+   ]
   ],
   [
    12,
@@ -2839,7 +2913,14 @@
    "erz",
    "goz",
    0,
-   1
+   1,
+   [
+    [
+     "a",
+     "Efkan Bekiroğlu",
+     "70'"
+    ]
+   ]
   ],
   [
    12,
@@ -2847,31 +2928,24 @@
    "kas",
    "ala",
    2,
-   1
-  ],
-  [
-   12,
-   "22 Kas",
-   "gen",
-   "gaz",
    1,
-   0
-  ],
-  [
-   12,
-   "22 Kas",
-   "gs",
-   "sam",
-   2,
-   1
-  ],
-  [
-   12,
-   "22 Kas",
-   "koc",
-   "fb",
-   2,
-   2
+   [
+    [
+     "h",
+     "Adrian Benedyczak",
+     "29'"
+    ],
+    [
+     "h",
+     "Adrian Benedyczak",
+     "90'"
+    ],
+    [
+     "a",
+     "Florent Hadergjonaj",
+     "45'"
+    ]
+   ]
   ],
   [
    12,
@@ -2879,7 +2953,39 @@
    "kon",
    "bjk",
    2,
-   4
+   4,
+   [
+    [
+     "h",
+     "Jean-Luc Dompé",
+     "42'"
+    ],
+    [
+     "h",
+     "Enis Destan",
+     "63'"
+    ],
+    [
+     "a",
+     "Dušan Vlahović",
+     "10'"
+    ],
+    [
+     "a",
+     "Dušan Vlahović",
+     "34'"
+    ],
+    [
+     "a",
+     "Leandro Trossard",
+     "79'"
+    ],
+    [
+     "a",
+     "Václav Černý",
+     "90'"
+    ]
+   ]
   ],
   [
    12,
@@ -2887,7 +2993,54 @@
    "ts",
    "eyup",
    1,
-   0
+   0,
+   [
+    [
+     "h",
+     "Ozan Tufan",
+     "5'"
+    ]
+   ]
+  ],
+  [
+   12,
+   "23 Kas",
+   "ibfk",
+   "cor",
+   4,
+   2,
+   [
+    [
+     "h",
+     "Eldar Şahmuradov",
+     "77'"
+    ],
+    [
+     "h",
+     "Bertuğ Yıldırım",
+     "82'"
+    ],
+    [
+     "h",
+     "Bertuğ Yıldırım",
+     "86'"
+    ],
+    [
+     "h",
+     "Bertuğ Yıldırım",
+     "90'"
+    ],
+    [
+     "a",
+     "Jesús Ramírez",
+     "29'"
+    ],
+    [
+     "a",
+     "Ermin Mahmić",
+     "68'"
+    ]
+   ]
   ]
  ],
  "fixturesWeek": 13,
